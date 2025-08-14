@@ -36,7 +36,7 @@ namespace ProjectFirma.Web.Views.Invoice
         public IEnumerable<SelectListItem> InvoiceApprovalStatuses { get; set; }
         public IEnumerable<SelectListItem> InvoiceStatuses { get; set; }
 
-        public IEnumerable<SelectListItem> Grants { get; set; }
+        public IEnumerable<SelectListItem> FundSources { get; set; }
         public IEnumerable<SelectListItem> ProgramIndices { get; set; }
         public IEnumerable<SelectListItem> ProjectCodes { get; set; }
         public IEnumerable<SelectListItem> OrganizationCodes { get; set; }
@@ -45,10 +45,10 @@ namespace ProjectFirma.Web.Views.Invoice
 
         public EditInvoiceViewData(EditInvoiceType editInvoiceType,
             IEnumerable<InvoiceApprovalStatus> invoiceApprovalStatuses, IEnumerable<InvoiceStatus> invoiceStatuses,
-            IEnumerable<Person> people, IEnumerable<Models.Grant> grants, IEnumerable<Models.ProgramIndex> programIndices,
+            IEnumerable<Person> people, IEnumerable<Models.FundSource> fundSources, IEnumerable<Models.ProgramIndex> programIndices,
             IEnumerable<Models.ProjectCode> projectCodes, IEnumerable<OrganizationCode> organizationCodes)
         {
-            Grants = grants.ToSelectListWithEmptyFirstRow(x => x.GrantID.ToString(CultureInfo.InvariantCulture), y => $"{y.GrantNumber} - {y.GrantName}");
+            FundSources = fundSources.ToSelectListWithEmptyFirstRow(x => x.FundSourceID.ToString(CultureInfo.InvariantCulture), y => $"{y.FundSourceNumber} - {y.FundSourceName}");
             ProgramIndices = programIndices.ToSelectListWithEmptyFirstRow(x => x.ProgramIndexID.ToString(CultureInfo.InvariantCulture), y => $"{y.ProgramIndexCode} - {y.ProgramIndexTitle} ({y.Biennium})");
             ProjectCodes = projectCodes.ToSelectListWithEmptyFirstRow(x => x.ProjectCodeID.ToString(CultureInfo.InvariantCulture), y => $"{y.ProjectCodeName} - {y.ProjectCodeTitle}");
             OrganizationCodes = organizationCodes.ToSelectListWithEmptyFirstRow(x => x.OrganizationCodeID.ToString(CultureInfo.InvariantCulture), y => $"{y.OrganizationCodeValue} - {y.OrganizationCodeName} ");

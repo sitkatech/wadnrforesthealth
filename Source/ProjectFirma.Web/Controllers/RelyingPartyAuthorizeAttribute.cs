@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.Controllers
             {
                 var baseFeatureType = typeof(FirmaBaseFeature);
                 var baseFeatureAttribute = filterContext.ActionDescriptor.GetCustomAttributes(baseFeatureType, true).SingleOrDefault();
-                if (baseFeatureAttribute != null && ((FirmaBaseFeature)baseFeatureAttribute).GrantedRoles.Any())
+                if (baseFeatureAttribute != null && ((FirmaBaseFeature)baseFeatureAttribute).FundSourceedRoles.Any())
                 {
                     base.OnAuthorization(filterContext);
                 }

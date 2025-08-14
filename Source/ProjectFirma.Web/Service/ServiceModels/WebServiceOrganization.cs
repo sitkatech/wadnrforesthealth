@@ -39,7 +39,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
             OrganizationType = organization.OrganizationType?.OrganizationTypeName;
             PrimaryContact = organization.PrimaryContactPersonAsString;
             ProjectCount = organization.GetAllActiveProjectsAndProposals(Person.GetAnonymousSitkaUser()).Count;
-            GrantAllocationCount = organization.GrantAllocations.Count;
+            FundSourceAllocationCount = organization.FundSourceAllocations.Count;
             UserCount = organization.People.Count;
             OrganizationSummaryUrl = organization.GetDetailUrl();
         }    
@@ -51,7 +51,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
         
         [DataMember] public string PrimaryContact { get; set; }
         [DataMember] public int ProjectCount { get; set; }
-        [DataMember] public int GrantAllocationCount { get; set; }
+        [DataMember] public int FundSourceAllocationCount { get; set; }
         [DataMember] public int UserCount { get; set; }
 
         [DataMember] public string OrganizationSummaryUrl { get; set; }
@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Service.ServiceModels
             Add("OrganizationType", a => a.OrganizationType, 0);
             Add("PrimaryContact", a => a.PrimaryContact, 0);
             Add("NumberOfProjects", a => a.ProjectCount, 0);
-            Add("NumberOfGrantAllocations", a => a.GrantAllocationCount, 0);
+            Add("NumberOfFundSourceAllocations", a => a.FundSourceAllocationCount, 0);
             Add("NumberOfUsers", a => a.UserCount, 0);
             Add("OrganizationSummaryUrl", x => x.OrganizationSummaryUrl, 0);
         }

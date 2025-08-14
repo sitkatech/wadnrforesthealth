@@ -25,12 +25,12 @@ namespace ProjectFirma.Web.Views.ProjectFunding
 {
     public class ProjectFundingDetailViewData : FirmaViewData
     {
-        public readonly List<IGrantAllocationRequestAmount> GrantAllocationRequestAmounts;
+        public readonly List<IFundSourceAllocationRequestAmount> FundSourceAllocationRequestAmounts;
         public readonly bool IsMatchAndPayRelevant;
 
-        public ProjectFundingDetailViewData(Person currentPerson, List<IGrantAllocationRequestAmount> grantAllocationRequestAmounts, bool isMatchAndPayRelevant) : base(currentPerson)
+        public ProjectFundingDetailViewData(Person currentPerson, List<IFundSourceAllocationRequestAmount> fundSourceAllocationRequestAmounts, bool isMatchAndPayRelevant) : base(currentPerson)
         {
-            GrantAllocationRequestAmounts = grantAllocationRequestAmounts;
+            FundSourceAllocationRequestAmounts = fundSourceAllocationRequestAmounts;
             IsMatchAndPayRelevant = isMatchAndPayRelevant;
         }
     }

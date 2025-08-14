@@ -16,7 +16,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
         public decimal? MatchAmount { get; set; }
         private string MatchAmountDisplayFromModel { get; set; }
         public string MatchAmountDisplay(int decimalPlaces = 2) => MatchAmount.HasValue ? MatchAmount.Value.ToString($"C{decimalPlaces}") : MatchAmountDisplayFromModel;
-        public string GrantNumber { get; set; }
+        public string FundSourceNumber { get; set; }
         public string ProgramIndexCode { get; set; }
         public string ProjectCodeName { get; set; }
         public string OrganizationCodeValue { get; set; }
@@ -41,7 +41,7 @@ namespace ProjectFirma.Web.ReportTemplates.Models
                 PaymentAmount = invoice.PaymentAmount;
                 MatchAmount = invoice.MatchAmount;
                 MatchAmountDisplayFromModel = invoice.MatchAmountForDisplay;
-                GrantNumber = invoice.Grant?.GrantNumber;
+                FundSourceNumber = invoice.FundSource?.FundSourceNumber;
                 ProgramIndexCode = invoice.ProgramIndex?.ProgramIndexCode;
                 ProjectCodeName = invoice.ProjectCode?.ProjectCodeName;
                 OrganizationCodeValue = invoice.OrganizationCode?.OrganizationCodeValue;

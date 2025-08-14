@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Views.Tag
         {
             if (hasDeletePermissions)
             {
-                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 30);
+                Add("Delete", x => AgGridHtmlHelpers.MakeDeleteIconAndLinkBootstrap(x.DeleteUrl, true, true), 25);
             }
 
             Add(Models.FieldDefinition.TagName.ToGridHeaderString(), a => new HtmlLinkObject(a.DisplayName,a.SummaryUrl).ToJsonObjectForAgGrid(), 200, AgGridColumnFilterType.HtmlLinkJson);

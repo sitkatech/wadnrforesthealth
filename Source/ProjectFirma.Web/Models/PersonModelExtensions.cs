@@ -152,7 +152,9 @@ namespace ProjectFirma.Web.Models
             {
                 throw new Exception("Person is not a Full User and should not have a base role");
             }
-            return person.PersonRoles.Where(x => x.Role.IsBaseRole).Select(x => x.Role).Single();
+
+            var thisPersonsBaseRoles = person.PersonRoles.Where(x => x.Role.IsBaseRole).Select(x => x.Role).ToList();
+            return thisPersonsBaseRoles.Single();//expecting each user to have only one base role
         }
 
         /// <summary>

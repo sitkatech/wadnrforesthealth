@@ -111,7 +111,7 @@ namespace ProjectFirma.Web.Models
             Assert.That(result, Is.EqualTo(testProject.AuditDescriptionString));
         }
 
-        public void TestGrantAllocationAuditLogging()
+        public void TestFundSourceAllocationAuditLogging()
         {
             // Get an arbitrary real-word person to do these actions
             var firmaUser = HttpRequestStorage.DatabaseEntities.People.First();
@@ -119,38 +119,38 @@ namespace ProjectFirma.Web.Models
             // Create audit logging
             // --------------------
 
-            // Make a test grant allocation and save it
+            // Make a test fundSource allocation and save it
             var dbContext = HttpRequestStorage.DatabaseEntities;
-            var testGrantAllocation = TestFramework.TestGrantAllocation.Create(dbContext);
+            var testFundSourceAllocation = TestFramework.TestFundSourceAllocation.Create(dbContext);
             var testOrganization = TestFramework.TestOrganization.Create(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
-            // Check that the audit log mentions this GrantAllocation
-            System.Diagnostics.Trace.WriteLine($"Looking for {FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} named \"{testGrantAllocation.GrantAllocationName}\" in Audit Log database entries.");
-            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testGrantAllocation.GrantAllocationName)));
+            // Check that the audit log mentions this FundSourceAllocation
+            System.Diagnostics.Trace.WriteLine($"Looking for {FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} named \"{testFundSourceAllocation.FundSourceAllocationName}\" in Audit Log database entries.");
+            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.OriginalValue.Contains(testFundSourceAllocation.FundSourceAllocationName)));
 
             // Change audit logging
             // --------------------
 
-            // Make changes to the grant allocation
-            var newGrantAllocationName = TestFramework.MakeTestName("New Grant Allocation Name");
-            testGrantAllocation.GrantAllocationName = newGrantAllocationName;
-            testGrantAllocation.Organization = testOrganization;
+            // Make changes to the fundSource allocation
+            var newFundSourceAllocationName = TestFramework.MakeTestName("New FundSource Allocation Name");
+            testFundSourceAllocation.FundSourceAllocationName = newFundSourceAllocationName;
+            testFundSourceAllocation.Organization = testOrganization;
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
 
-            // Check that the audit log mentions this NEW GrantAllocation name
-            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.NewValue.Contains(newGrantAllocationName)));
+            // Check that the audit log mentions this NEW FundSourceAllocation name
+            Check.Assert(HttpRequestStorage.DatabaseEntities.AuditLogs.Any(al => al.NewValue.Contains(newFundSourceAllocationName)));
 
             // Delete audit logging
             // --------------------
 
-            testGrantAllocation.DeleteFull(dbContext);
+            testFundSourceAllocation.DeleteFull(dbContext);
             HttpRequestStorage.DatabaseEntities.SaveChanges(firmaUser);
-            // Check that the audit log mentions this GrantAllocation name as deleted
+            // Check that the audit log mentions this FundSourceAllocation name as deleted
             Check.Assert(
                 HttpRequestStorage.DatabaseEntities.AuditLogs.SingleOrDefault(
-                    al => al.TableName == "GrantAllocation" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testGrantAllocation.GrantAllocationID) != null,
-                "Could not find deleted Grant Allocation record");
+                    al => al.TableName == "FundSourceAllocation" && al.AuditLogEventTypeID == AuditLogEventType.Deleted.AuditLogEventTypeID && al.RecordID == testFundSourceAllocation.FundSourceAllocationID) != null,
+                "Could not find deleted FundSource Allocation record");
         }
 
         [Test]

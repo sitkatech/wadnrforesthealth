@@ -80,7 +80,7 @@ namespace ProjectFirma.Web.Views.ProjectCreate
 
             IsPriorityLandscapeSectionComplete = !editProjectPriorityLandscapesValidationResults.Any();
 
-            var efValidationResults = new ExpectedFundingViewModel(project.ProjectGrantAllocationRequests.ToList(),
+            var efValidationResults = new ExpectedFundingViewModel(project.ProjectFundSourceAllocationRequests.ToList(),
                                                                    project.EstimatedTotalCost,
                                                                    project.ProjectFundingSourceNotes,
                                                                    project.ProjectFundingSources.ToList())

@@ -73,7 +73,7 @@ namespace ProjectFirma.Web.Views.Organization
             Add(Models.FieldDefinition.ExpirationDate.ToGridHeaderString(), x => x.GetExpirationDateFormatted(), 115, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.CompletionDate.ToGridHeaderString(), x => x.GetCompletionDateFormatted(), 90, AgGridColumnFilterType.SelectFilterStrict);
             Add(Models.FieldDefinition.EstimatedTotalCost.ToGridHeaderString(), x => x.EstimatedTotalCost, 85, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
-            Add(Models.FieldDefinition.ProjectGrantAllocationRequestTotalAmount.ToGridHeaderString(), x => x.GetTotalFunding(), 85, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
+            Add(Models.FieldDefinition.ProjectFundSourceAllocationRequestTotalAmount.ToGridHeaderString(), x => x.GetTotalFunding(), 85, AgGridColumnFormatType.CurrencyWithCents, AgGridColumnAggregationType.Total);
             Add(Models.FieldDefinition.ProjectDescription.ToGridHeaderString(), x => x.ProjectDescription, 200);
             if (new FirmaAdminFeature().HasPermissionByPerson(currentPerson))
             {

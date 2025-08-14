@@ -169,37 +169,37 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectUpdateSectionBasics : ProjectUpdateSection
     {
         private ProjectUpdateSectionBasics(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionBasics Instance = new ProjectUpdateSectionBasics(2, @"Basics", @"Basics", 20, true, 1);
+        public static readonly ProjectUpdateSectionBasics Instance = new ProjectUpdateSectionBasics(2, @"Basics", @"Basics", 10, true, 6);
     }
 
     public partial class ProjectUpdateSectionLocationSimple : ProjectUpdateSection
     {
         private ProjectUpdateSectionLocationSimple(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionLocationSimple Instance = new ProjectUpdateSectionLocationSimple(3, @"LocationSimple", @"Location - Simple", 30, true, 2);
+        public static readonly ProjectUpdateSectionLocationSimple Instance = new ProjectUpdateSectionLocationSimple(3, @"LocationSimple", @"Location - Simple", 20, true, 6);
     }
 
     public partial class ProjectUpdateSectionLocationDetailed : ProjectUpdateSection
     {
         private ProjectUpdateSectionLocationDetailed(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionLocationDetailed Instance = new ProjectUpdateSectionLocationDetailed(4, @"LocationDetailed", @"Location - Detailed", 40, false, 2);
+        public static readonly ProjectUpdateSectionLocationDetailed Instance = new ProjectUpdateSectionLocationDetailed(4, @"LocationDetailed", @"Location - Detailed", 30, false, 2);
     }
 
     public partial class ProjectUpdateSectionExpectedFunding : ProjectUpdateSection
     {
         private ProjectUpdateSectionExpectedFunding(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionExpectedFunding Instance = new ProjectUpdateSectionExpectedFunding(7, @"ExpectedFunding", @"Expected Funding", 70, false, 4);
+        public static readonly ProjectUpdateSectionExpectedFunding Instance = new ProjectUpdateSectionExpectedFunding(7, @"ExpectedFunding", @"Expected Funding", 100, false, 5);
     }
 
     public partial class ProjectUpdateSectionPhotos : ProjectUpdateSection
     {
         private ProjectUpdateSectionPhotos(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionPhotos Instance = new ProjectUpdateSectionPhotos(9, @"Photos", @"Photos", 100, false, 5);
+        public static readonly ProjectUpdateSectionPhotos Instance = new ProjectUpdateSectionPhotos(9, @"Photos", @"Photos", 110, false, 5);
     }
 
     public partial class ProjectUpdateSectionExternalLinks : ProjectUpdateSection
     {
         private ProjectUpdateSectionExternalLinks(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionExternalLinks Instance = new ProjectUpdateSectionExternalLinks(10, @"ExternalLinks", @"External Links", 125, false, 5);
+        public static readonly ProjectUpdateSectionExternalLinks Instance = new ProjectUpdateSectionExternalLinks(10, @"ExternalLinks", @"External Links", 130, false, 5);
     }
 
     public partial class ProjectUpdateSectionNotesAndDocuments : ProjectUpdateSection
@@ -211,13 +211,13 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectUpdateSectionOrganizations : ProjectUpdateSection
     {
         private ProjectUpdateSectionOrganizations(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionOrganizations Instance = new ProjectUpdateSectionOrganizations(12, @"Organizations", @"Organizations", 25, true, 1);
+        public static readonly ProjectUpdateSectionOrganizations Instance = new ProjectUpdateSectionOrganizations(12, @"Organizations", @"Organizations", 90, true, 5);
     }
 
     public partial class ProjectUpdateSectionContacts : ProjectUpdateSection
     {
         private ProjectUpdateSectionContacts(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionContacts Instance = new ProjectUpdateSectionContacts(13, @"Contacts", @"Contacts", 26, true, 1);
+        public static readonly ProjectUpdateSectionContacts Instance = new ProjectUpdateSectionContacts(13, @"Contacts", @"Contacts", 80, true, 5);
     }
 
     public partial class ProjectUpdateSectionDNRUplandRegions : ProjectUpdateSection
@@ -229,18 +229,18 @@ namespace ProjectFirma.Web.Models
     public partial class ProjectUpdateSectionPriorityLandscapes : ProjectUpdateSection
     {
         private ProjectUpdateSectionPriorityLandscapes(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionPriorityLandscapes Instance = new ProjectUpdateSectionPriorityLandscapes(15, @"PriorityLandscapes", @"Priority Landscapes", 45, true, 2);
+        public static readonly ProjectUpdateSectionPriorityLandscapes Instance = new ProjectUpdateSectionPriorityLandscapes(15, @"PriorityLandscapes", @"Priority Landscapes", 40, true, 2);
     }
 
     public partial class ProjectUpdateSectionTreatments : ProjectUpdateSection
     {
         private ProjectUpdateSectionTreatments(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionTreatments Instance = new ProjectUpdateSectionTreatments(17, @"Treatments", @"Treatments", 90, false, 5);
+        public static readonly ProjectUpdateSectionTreatments Instance = new ProjectUpdateSectionTreatments(17, @"Treatments", @"Treatments", 70, false, 2);
     }
 
     public partial class ProjectUpdateSectionCounties : ProjectUpdateSection
     {
         private ProjectUpdateSectionCounties(int projectUpdateSectionID, string projectUpdateSectionName, string projectUpdateSectionDisplayName, int sortOrder, bool hasCompletionStatus, int projectWorkflowSectionGroupingID) : base(projectUpdateSectionID, projectUpdateSectionName, projectUpdateSectionDisplayName, sortOrder, hasCompletionStatus, projectWorkflowSectionGroupingID) {}
-        public static readonly ProjectUpdateSectionCounties Instance = new ProjectUpdateSectionCounties(18, @"Counties", @"Counties", 80, true, 2);
+        public static readonly ProjectUpdateSectionCounties Instance = new ProjectUpdateSectionCounties(18, @"Counties", @"Counties", 60, true, 2);
     }
 }

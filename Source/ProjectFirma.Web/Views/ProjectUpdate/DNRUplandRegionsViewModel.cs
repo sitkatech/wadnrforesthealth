@@ -45,5 +45,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             UpdateModel(projectUpdateBatch, currentProjectUpdateRegions, allProjectUpdateRegions);
         }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return new List<ValidationResult>();
+        }
     }
 }

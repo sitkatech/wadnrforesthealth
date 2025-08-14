@@ -27,7 +27,7 @@ namespace ProjectFirma.Web.Security
 {
     [SecurityFeatureDescription("View Full Invoice List")]
     // Admin for now, until someone tells us differently
-    //public class GrantsViewFullListFeature : FirmaAdminFeature
+    //public class FundSourcesViewFullListFeature : FirmaAdminFeature
     public class InvoicesViewFullListFeature : FirmaFeature
     {
         public InvoicesViewFullListFeature() : base(new List<Role> { Role.EsaAdmin, Role.Admin, Role.ProjectSteward }) { }

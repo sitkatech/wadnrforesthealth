@@ -227,7 +227,7 @@ namespace ProjectFirma.Web.Controllers
 
         private PartialViewResult ViewDeleteOrganization(Organization organization, ConfirmDialogFormViewModel viewModel)
         {
-            var confirmMessage = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.GrantAllocations.Count} {FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()}.<br /><br />Are you sure you want to delete this Organization?";
+            var confirmMessage = $"{FieldDefinition.Organization.GetFieldDefinitionLabel()} \"{organization.OrganizationName}\" is related to {organization.ProjectOrganizations.Count} projects and has {organization.FundSourceAllocations.Count} {FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()}.<br /><br />Are you sure you want to delete this Organization?";
             var viewData = new ConfirmDialogFormViewData(confirmMessage, true);
             return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }

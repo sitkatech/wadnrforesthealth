@@ -5,9 +5,9 @@ GO
 CREATE PROCEDURE dbo.pImportLoaTabularData
 AS
 begin
-              if object_id('tempdb.dbo.#projectGrantAllocation') is not null drop table #projectGrantAllocation
+              if object_id('tempdb.dbo.#projectFundSourceAllocation') is not null drop table #projectFundSourceAllocation
               select x.ProjectID
-              , x.GrantAllocationID
+              , x.FundSourceAllocationID
               , x.MatchAmount
               , x.PayAmount
               , x.LetterDate
@@ -18,8 +18,8 @@ begin
 			  , x.IsSoutheast
 			  , x.LoaStageID
 			  , x.DecisionDate
-              into #projectGrantAllocation
-              from dbo.vLoaStageProjectGrantAllocation x
+              into #projectFundSourceAllocation
+              from dbo.vLoaStageProjectFundSourceAllocation x
 
 
               if object_id('tempdb.dbo.#projectFocusArea') is not null drop table #projectFocusArea
@@ -44,46 +44,46 @@ begin
               join #projectFocusAreaForUpdate pfa on pfa.ProjectID = p.ProjectID
 
 
-              if object_id('tempdb.dbo.#projectGrantAllocationRequestPart') is not null drop table #projectGrantAllocationRequestPart
+              if object_id('tempdb.dbo.#projectFundSourceAllocationRequestPart') is not null drop table #projectFundSourceAllocationRequestPart
               select x.ProjectID,
-                     x.GrantAllocationID
+                     x.FundSourceAllocationID
                      , x.MatchAmount + x.PayAmount as TotalAmount
                      , x.MatchAmount as MatchAmount
                      , x.PayAmount as PayAmount
-                     into #projectGrantAllocationRequestPart
-                      from #projectGrantAllocation x where x.GrantAllocationID is not null
+                     into #projectFundSourceAllocationRequestPart
+                      from #projectFundSourceAllocation x where x.FundSourceAllocationID is not null
 
 
-            if object_id('tempdb.dbo.#projectGrantAllocationRequest') is not null drop table #projectGrantAllocationRequest
+            if object_id('tempdb.dbo.#projectFundSourceAllocationRequest') is not null drop table #projectFundSourceAllocationRequest
               select x.ProjectID,
-                     x.GrantAllocationID
+                     x.FundSourceAllocationID
                      , sum(x.TotalAmount) as TotalAmount
                      , sum(x.MatchAmount) as MatchAmount
                      , sum(x.PayAmount) as PayAmount
-                     into #projectGrantAllocationRequest
-                      from #projectGrantAllocationRequestPart x group by x.ProjectID, x.GrantAllocationID
+                     into #projectFundSourceAllocationRequest
+                      from #projectFundSourceAllocationRequestPart x group by x.ProjectID, x.FundSourceAllocationID
 
 
 
 
-              delete from dbo.ProjectGrantAllocationRequest where ProjectGrantAllocationRequestID in (select ProjectGrantAllocationRequestID 
+              delete from dbo.ProjectFundSourceAllocationRequest where ProjectFundSourceAllocationRequestID in (select ProjectFundSourceAllocationRequestID 
                                                                                                       from 
-                                                                                                      dbo.ProjectGrantAllocationRequest pgar
+                                                                                                      dbo.ProjectFundSourceAllocationRequest pgar
                                                                                                       join dbo.Project p on pgar.ProjectID = p.ProjectID
                                                                                                       join dbo.ProjectProgram pp on p.ProjectID = pp.ProjectID
                                                                                                       where pp.ProgramID = 3 -- LoaProgram)
                                                                                                       )
 
-              insert into dbo.ProjectGrantAllocationRequest(ProjectID, GrantAllocationID, TotalAmount, MatchAmount, PayAmount, CreateDate, ImportedFromTabularData)
+              insert into dbo.ProjectFundSourceAllocationRequest(ProjectID, FundSourceAllocationID, TotalAmount, MatchAmount, PayAmount, CreateDate, ImportedFromTabularData)
 
               select x.ProjectID,
-                     x.GrantAllocationID
+                     x.FundSourceAllocationID
                      , x.TotalAmount
                      , x.MatchAmount
                      , x.PayAmount
                      , getdate()
                      , 1
-                      from #projectGrantAllocationRequest x 
+                      from #projectFundSourceAllocationRequest x 
 
 
                 update dbo.Project 
@@ -99,7 +99,7 @@ begin
 				, min(x.LetterDate) as LetterDate
 				, min(x.ApplicationDate) as ApplicationDate
 				, min(x.DecisionDate) as DecisionDate
-                  from  #projectGrantAllocation x group by x.ProjectID) y on y.ProjectID = p.ProjectID
+                  from  #projectFundSourceAllocation x group by x.ProjectID) y on y.ProjectID = p.ProjectID
 
 
 

@@ -340,7 +340,7 @@ namespace ProjectFirma.Web.Controllers
         }
 
 
-        #region WADNR Grant JSON API
+        #region WADNR FundSource JSON API
 
         [InteractionEventJsonApiFeature]
         public JsonNetJArrayResult InteractionEventJsonApi()

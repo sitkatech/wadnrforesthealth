@@ -53,9 +53,9 @@
         return urlHtml;
     }
 
-    private string RunGrantExpendituresImportUrl()
+    private string RunFundSourceExpendituresImportUrl()
     {
-        string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.RunGrantExpendituresImportJob());
+        string urlHtml = SitkaRoute<JobController>.BuildAbsoluteUrlHttpsFromExpression(c => c.RunFundSourceExpendituresImportJob());
         return urlHtml;
 
     }
@@ -112,8 +112,8 @@
 
 <br />
 
-<form action="@Html.Raw(RunGrantExpendituresImportUrl())" method="post">
-    <button type="submit" class="btn btn-primary job-run-btn">Run Grant Expenditures Import Job</button>
+<form action="@Html.Raw(RunFundSourceExpendituresImportUrl())" method="post">
+    <button type="submit" class="btn btn-primary job-run-btn">Run FundSource Expenditures Import Job</button>
 </form>
 
 

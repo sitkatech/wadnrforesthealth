@@ -57,7 +57,7 @@ namespace ProjectFirma.Web.Views.Project
         public string EditProjectPriorityLandscapeUrl { get; }
         public string EditProjectBoundingBoxUrl { get; }
         public string EditExternalLinksUrl { get; }
-        public string EditExpectedFundingUrl { get; }
+        public string EditProjectFundingUrl { get; }
 
         public ProjectBasicsViewData ProjectBasicsViewData { get; }
         public ProjectLocationSummaryViewData ProjectLocationSummaryViewData { get; }
@@ -128,6 +128,9 @@ namespace ProjectFirma.Web.Views.Project
 
         public List<AgreementProject> ProjectAgreements { get; }
 
+        public bool IsProjectAnLoaProject { get; set; }
+        public bool ShowProjectUpdateModal { get; }
+
 
         public DetailViewData(Person currentPerson, Models.Project project, List<ProjectStage> projectStages,
             ProjectBasicsViewData projectBasicsViewData,
@@ -185,6 +188,8 @@ namespace ProjectFirma.Web.Views.Project
             var pendingProjectsListUrl = SitkaRoute<ProjectController>.BuildUrlFromExpression(c => c.Pending());
             var backToAllPendingProjectsText = $"Back to all Pending {Models.FieldDefinition.Project.GetFieldDefinitionLabelPluralized()}";
 
+            ShowProjectUpdateModal = false;
+
             if (project.IsRejected())
             {
                 var projectApprovalStatus = project.ProjectApprovalStatus;
@@ -230,11 +235,22 @@ namespace ProjectFirma.Web.Views.Project
             else
             {
                 var latestUpdateState = project.GetLatestUpdateState();
-                ProjectUpdateButtonText =
-                    latestUpdateState == ProjectUpdateState.Submitted ||
-                    latestUpdateState == ProjectUpdateState.Returned
-                        ? "Review Update"
-                        : $"Update {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
+                if (latestUpdateState == ProjectUpdateState.Submitted || latestUpdateState == ProjectUpdateState.Returned)
+                {
+                    ProjectUpdateButtonText = "Review Update";
+                }
+                else
+                {
+                    ProjectUpdateButtonText = $"Update {Models.FieldDefinition.Project.GetFieldDefinitionLabel()}";
+                    if (latestUpdateState == null || latestUpdateState == ProjectUpdateState.Approved)
+                    {
+                        ShowProjectUpdateModal = true;
+                    }
+                    
+                    
+                }
+
+
                 ProjectWizardUrl = project.GetProjectUpdateUrl();
                 CanLaunchProjectOrProposalWizard = userHasProjectUpdatePermissions;
                 ProjectListUrl = FullProjectListUrl;
@@ -289,9 +305,9 @@ namespace ProjectFirma.Web.Views.Project
 
             ProjectInvoiceDetailViewData = projectInvoiceDetailViewData;
             ProjectFundingDetailViewData = projectFundingDetailViewData;
-            EditExpectedFundingUrl =
-                SitkaRoute<ProjectGrantAllocationRequestController>.BuildUrlFromExpression(c =>
-                    c.EditProjectGrantAllocationRequestsForProject(project));
+            EditProjectFundingUrl =
+                SitkaRoute<ProjectFundSourceAllocationRequestController>.BuildUrlFromExpression(c =>
+                    c.EditProjectFundSourceAllocationRequestsForProject(project));
 
             ProjectPeopleDetailViewData = projectPeopleDetailViewData;
             EditExternalLinksUrl = editExternalLinksUrl;
@@ -357,6 +373,8 @@ namespace ProjectFirma.Web.Views.Project
             ProjectInteractionEventsGridDataUrl = projectInteractionEventsGridDataUrl;
 
             ProjectAgreements = project.AgreementProjects.ToList();
+
+            IsProjectAnLoaProject = project.ProjectPrograms.Any(x => x.ProgramID == ProjectController.LoaProgramID);
         }
     }
 }

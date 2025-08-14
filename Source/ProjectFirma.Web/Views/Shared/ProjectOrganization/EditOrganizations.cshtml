@@ -75,7 +75,7 @@ Source code is available upon request via <support@sitkatech.com>.
     <div class="row">
         <div class="col-md-12">
             <p>Select the @FieldDefinition.Organization.GetFieldDefinitionLabelPluralized() that are associated with your @FieldDefinition.Project.GetFieldDefinitionLabel(). Some association types have a single organization; these are marked with a required symbol (<sup>@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup>). Other assocation types apply to any number of organizations and are not required.</p>
-            <p class="systemText">@FieldDefinition.Project.GetFieldDefinitionLabel() Funders are not set in this editor. They are determined by the @FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized() in the @FieldDefinition.Project.GetFieldDefinitionLabel() Expected Funding and Reported Expenditures.</p>
+            <p class="systemText">@FieldDefinition.Project.GetFieldDefinitionLabel() Funders are not set in this editor. They are determined by the @FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized() in the @FieldDefinition.Project.GetFieldDefinitionLabel() Expected Funding and Reported Expenditures.</p>
             <p>If you do not see an @FieldDefinition.Organization.GetFieldDefinitionLabel() listed, you can @ModalDialogFormHelper.ModalDialogFormLink(string.Format("request to have an {0} added", FieldDefinition.Organization.GetFieldDefinitionLabel()), ViewDataTyped.AddOrganizationUrl, string.Format("Request to add an {0}", FieldDefinition.Organization.GetFieldDefinitionLabel()), 800, "Submit Request", "Cancel", new List<string>(), null, null).</p>
         </div>
     </div>
@@ -85,7 +85,13 @@ Source code is available upon request via <support@sitkatech.com>.
     <div ng-show="AngularViewData.PrimaryContactRelationshipTypeSimple != null">
         <div class="row">
             @*Relationship type and description*@
-            <div class="col-md-12"><label ng-bind="AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeName"></label><sup ng-show="AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeCanOnlyBeRelatedOnceToAProject">@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup></div>
+            <div class="col-md-12">
+                <label ng-bind="AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeName"></label>
+                @if (ViewDataTyped.IsCreateWorkflow)
+                {
+                    <sup ng-show="AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeCanOnlyBeRelatedOnceToAProject">@Html.Raw(BootstrapHtmlHelpers.RequiredIcon)</sup>
+                }
+            </div>
         </div>
         <div class="row">
             <div class="col-md-4 col-md-push-8">
@@ -99,7 +105,6 @@ Source code is available upon request via <support@sitkatech.com>.
                             @if (ViewDataTyped.IsLeadImplementerImported && !ViewDataTyped.IsCreateWorkflow)
                             {
                                 <select class="selectpicker form-control" disabled="disabled" id="todo{{AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID}}" ng-model="selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID]" ng-change="selectionChanged(selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID],AngularViewData.PrimaryContactRelationshipTypeSimple)" data-width="100%" data-live-search="true" data-size="8">
-                                    <option value="" disabled selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactRelationshipTypeSimple)">Select one</option>
                                     <option ng-repeat="organization in getAvailableOrganizationsForRelationshipType(AngularViewData.PrimaryContactRelationshipTypeSimple)"
                                             ng-bind="organization.OrganizationName"
                                             ng-value="organization.OrganizationID"
@@ -110,7 +115,6 @@ Source code is available upon request via <support@sitkatech.com>.
                             else
                             {
                                 <select class="selectpicker form-control" id="todo{{AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID}}" ng-model="selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID]" ng-change="selectionChanged(selectedOrganizationID[AngularViewData.PrimaryContactRelationshipTypeSimple.RelationshipTypeID],AngularViewData.PrimaryContactRelationshipTypeSimple)" data-width="100%" data-live-search="true" data-size="8">
-                                    <option value="" disabled selected ng-bind="dropdownDefaultOption(AngularViewData.PrimaryContactRelationshipTypeSimple)">Select one</option>
                                     <option ng-repeat="organization in getAvailableOrganizationsForRelationshipType(AngularViewData.PrimaryContactRelationshipTypeSimple)"
                                             ng-bind="organization.OrganizationName"
                                             ng-value="organization.OrganizationID"

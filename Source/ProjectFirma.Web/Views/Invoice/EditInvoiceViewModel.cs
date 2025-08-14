@@ -72,8 +72,8 @@ namespace ProjectFirma.Web.Views.Invoice
         [Required]
         public int InvoicePaymentRequestID { get; set; }
 
-        [FieldDefinitionDisplay(FieldDefinitionEnum.Grant)]
-        public int? GrantID { get; set; }
+        [FieldDefinitionDisplay(FieldDefinitionEnum.FundSource)]
+        public int? FundSourceID { get; set; }
 
         [FieldDefinitionDisplay(FieldDefinitionEnum.ProgramIndex)]
         public int? ProgramIndexID { get; set; }
@@ -118,7 +118,7 @@ namespace ProjectFirma.Web.Views.Invoice
             InvoiceMatchAmountTypeID = invoice.InvoiceMatchAmountTypeID;
             InvoiceStatusID = invoice.InvoiceStatusID;
             InvoicePaymentRequestID = invoice.InvoicePaymentRequestID;
-            GrantID = invoice.GrantID;
+            FundSourceID = invoice.FundSourceID;
             ProgramIndexID = invoice.ProgramIndexID;
             ProjectCodeID = invoice.ProjectCodeID;
             InvoiceNumber = invoice.InvoiceNumber;
@@ -140,7 +140,7 @@ namespace ProjectFirma.Web.Views.Invoice
             invoice.InvoiceMatchAmountTypeID = InvoiceMatchAmountTypeID;
 
             invoice.InvoiceStatusID = InvoiceStatusID;
-            invoice.GrantID = GrantID;
+            invoice.FundSourceID = FundSourceID;
             invoice.ProgramIndexID = ProgramIndexID;
             invoice.ProjectCodeID = ProjectCodeID;
             invoice.InvoiceNumber = InvoiceNumber;

@@ -59,7 +59,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
 
             Add(Models.FieldDefinition.PercentageMatch.ToGridHeaderString(), x => x.PercentageMatch, 90, AgGridColumnFormatType.Percent);
 
-            Add(Models.FieldDefinition.GrantAllocation.ToGridHeaderString(), x => x.GetExpectedFundingGrantAllocationsAsCommaDelimitedListForAgGrid(), 300, AgGridColumnFilterType.HtmlLinkListJson);
+            Add(Models.FieldDefinition.FundSourceAllocation.ToGridHeaderString(), x => x.GetExpectedFundingFundSourceAllocationsAsCommaDelimitedListForAgGrid(), 300, AgGridColumnFilterType.HtmlLinkListJson);
 
 
 

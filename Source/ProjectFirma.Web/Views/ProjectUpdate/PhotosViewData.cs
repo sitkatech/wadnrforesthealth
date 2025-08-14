@@ -50,7 +50,7 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
                 "Photo");
             RefreshUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.RefreshPhotos(projectUpdateBatch.Project));
             DiffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffPhotos(projectUpdateBatch.Project));
-            ContinueUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.ExternalLinks(projectUpdateBatch.Project));
+            ContinueUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DocumentsAndNotes(projectUpdateBatch.Project));
         }
     }
 }

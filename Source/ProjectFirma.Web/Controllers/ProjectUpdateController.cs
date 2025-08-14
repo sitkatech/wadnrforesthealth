@@ -72,8 +72,7 @@ namespace ProjectFirma.Web.Controllers
     {
         public const string ProjectUpdateBatchDiffLogPartialViewPath = "~/Views/ProjectUpdate/ProjectUpdateBatchDiffLog.cshtml";
         public const string ProjectBasicsPartialViewPath = "~/Views/Shared/ProjectControls/ProjectBasics.cshtml";
-        public const string ProjectExpendituresPartialViewPath = "~/Views/Shared/ProjectUpdateDiffControls/ProjectExpendituresSummary.cshtml";
-        public const string ProjectExpectedFundingPartialViewPath = "~/Views/Shared/ProjectUpdateDiffControls/ProjectGrantAllocationRequestsDetail.cshtml";
+        public const string ProjectExpectedFundingPartialViewPath = "~/Views/Shared/ProjectUpdateDiffControls/ProjectFundSourceAllocationRequestsDetail.cshtml";
         public const string ImageGalleryPartialViewPath = "~/Views/Shared/ImageGallery.cshtml";
         public const string ExternalLinksPartialViewPath = "~/Views/Shared/TextControls/EntityExternalLinks.cshtml";
         public const string EntityNotesPartialViewPath = "~/Views/Shared/TextControls/EntityNotes.cshtml";
@@ -189,25 +188,27 @@ namespace ProjectFirma.Web.Controllers
             return new ModalDialogFormJsonResult();
         }
 
+
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
-        public ViewResult Instructions(ProjectPrimaryKey projectPrimaryKey)
+        public PartialViewResult StartProjectUpdate(ProjectPrimaryKey projectPrimaryKey)
         {
             var project = projectPrimaryKey.EntityObject;
-            var projectUpdateBatch = ProjectUpdateBatch.GetLatestNotApprovedProjectUpdateBatchOrCreateNew(project, CurrentPerson);
-            var updateStatus = GetUpdateStatus(projectUpdateBatch);
-            var viewData = new InstructionsViewData(CurrentPerson, projectUpdateBatch, updateStatus);
-            return RazorView<Instructions, InstructionsViewData>(viewData);
+            var viewModel = new ConfirmDialogFormViewModel(projectPrimaryKey.PrimaryKeyValue);
+            var viewData = new ConfirmDialogFormViewData($"To make changes to the project you must start a {FieldDefinition.Project.GetFieldDefinitionLabel()} update. <br/>The reviewer will then receive your update and either approve or return your {FieldDefinition.Project.GetFieldDefinitionLabel()} update request.", true);
+            return RazorPartialView<ConfirmDialogForm, ConfirmDialogFormViewData, ConfirmDialogFormViewModel>(viewData, viewModel);
         }
 
         [HttpPost]
         [ProjectUpdateCreateEditSubmitFeature]
-        public RedirectResult Instructions(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
+        [AutomaticallyCallEntityFrameworkSaveChangesWhenModelValid]
+        public ActionResult StartProjectUpdate(ProjectPrimaryKey projectPrimaryKey, ConfirmDialogFormViewModel viewModel)
         {
             var project = projectPrimaryKey.EntityObject;
             ProjectUpdateBatch.GetLatestNotApprovedProjectUpdateBatchOrCreateNewAndSaveToDatabase(project, CurrentPerson);
-            return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Basics(project)));
+            return new ModalDialogFormJsonResult(new SitkaRoute<ProjectUpdateController>(x => x.Basics(project)).BuildUrlFromExpression()); 
         }
+
 
         [HttpGet]
         [ProjectUpdateCreateEditSubmitFeature]
@@ -217,7 +218,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             var viewModel = new BasicsViewModel(projectUpdate, projectUpdateBatch.BasicsComment);
@@ -233,7 +234,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             if (!ModelState.IsValid)
@@ -261,7 +262,14 @@ namespace ProjectFirma.Web.Controllers
             var projectStages = projectUpdate.ProjectUpdateBatch.Project.ProjectStage.GetProjectStagesThatProjectCanUpdateTo();
             var focusAreas = HttpRequestStorage.DatabaseEntities.FocusAreas.ToList();
             var allPrograms = HttpRequestStorage.DatabaseEntities.Programs.ToList();
-            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage);
+            var leadImplementerRelationshipType = HttpRequestStorage.DatabaseEntities.RelationshipTypes
+                .Include(relationshipType => relationshipType.OrganizationTypeRelationshipTypes).SingleOrDefault(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID);
+            Check.EnsureNotNull(leadImplementerRelationshipType, "Lead Implementer Relationship Type cannot be found");
+            var organizationTypesAvailableForLeadImplementer = leadImplementerRelationshipType.OrganizationTypeRelationshipTypes.Select(x => x.OrganizationTypeID).ToList();
+            var organizations = HttpRequestStorage.DatabaseEntities.Organizations.Where(x => organizationTypesAvailableForLeadImplementer.Contains(x.OrganizationTypeID)).ToList();
+            var firmaPageType = FirmaPageType.ToType(FirmaPageTypeEnum.ProjectUpdateInstructions);
+            var firmaPage = FirmaPage.GetFirmaPageByPageType(firmaPageType);
+            var viewData = new BasicsViewData(CurrentPerson, projectUpdate, projectStages, updateStatus, basicsValidationResult, focusAreas, allPrograms, Models.Project.ImportedFieldWarningMessage, firmaPage, organizations);
             return RazorView<Basics, BasicsViewData, BasicsViewModel>(viewData, viewModel);
         }
 
@@ -288,9 +296,12 @@ namespace ProjectFirma.Web.Controllers
                 projectUpdate.LoadUpdateFromProject(project);
                 projectUpdateBatch.DeleteProjectUpdatePrograms();
                 projectUpdate.LoadProgramsFromProject(project);
+                projectUpdateBatch.DeleteProjectOrganizationUpdates();
+                // refresh data
+                ProjectOrganizationUpdate.CreateFromProject(projectUpdateBatch);
                 projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             }
-            return new ModalDialogFormJsonResult();
+            return new ModalDialogFormJsonResult(SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.Basics(projectPrimaryKey)));
         }
 
         private PartialViewResult ViewRefreshBasics(ConfirmDialogFormViewModel viewModel)
@@ -321,13 +332,14 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
-            var projectUpdate = projectUpdateBatch.ProjectUpdate;
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
-            var projectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
-            var viewModel = new ExpectedFundingViewModel(projectGrantAllocationRequestUpdates,
+
+            var projectUpdate = projectUpdateBatch.ProjectUpdate;
+            var projectFundSourceAllocationRequestUpdates = projectUpdateBatch.ProjectFundSourceAllocationRequestUpdates.ToList();
+            var viewModel = new ExpectedFundingViewModel(projectFundSourceAllocationRequestUpdates,
                                                          projectUpdateBatch.ExpectedFundingComment, 
                                                          projectUpdate.EstimatedTotalCost,
                                                          projectUpdate.ProjectFundingSourceNotes,
@@ -344,22 +356,22 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
                 return ViewExpectedFunding(projectUpdateBatch, viewModel);
             }
 
-            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Load();
-            var currentProjectGrantAllocationRequestUpdates = projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList();
-            var allProjectGrantAllocationExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequestUpdates.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectFundSourceAllocationRequestUpdates.Load();
+            var currentProjectFundSourceAllocationRequestUpdates = projectUpdateBatch.ProjectFundSourceAllocationRequestUpdates.ToList();
+            var allProjectFundSourceAllocationExpectedFunding = HttpRequestStorage.DatabaseEntities.ProjectFundSourceAllocationRequestUpdates.Local;
 
             HttpRequestStorage.DatabaseEntities.ProjectFundingSourceUpdates.Load();
             var projectFundingSourceUpdates = projectUpdateBatch.ProjectFundingSourceUpdates.ToList();
             var allProjectFundingSourceUpdates = HttpRequestStorage.DatabaseEntities.ProjectFundingSourceUpdates.Local;
 
-            viewModel.UpdateModel(projectUpdateBatch, currentProjectGrantAllocationRequestUpdates, allProjectGrantAllocationExpectedFunding, projectUpdateBatch.ProjectUpdate, projectFundingSourceUpdates, allProjectFundingSourceUpdates);
+            viewModel.UpdateModel(projectUpdateBatch, currentProjectFundSourceAllocationRequestUpdates, allProjectFundSourceAllocationExpectedFunding, projectUpdateBatch.ProjectUpdate, projectFundingSourceUpdates, allProjectFundingSourceUpdates);
 
             if (projectUpdateBatch.IsSubmitted)
             {
@@ -372,16 +384,16 @@ namespace ProjectFirma.Web.Controllers
 
         private ViewResult ViewExpectedFunding(ProjectUpdateBatch projectUpdateBatch, ExpectedFundingViewModel viewModel)
         {
-            var allGrantAllocations = HttpRequestStorage.DatabaseEntities.GrantAllocations.ToList().Select(x => new GrantAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
-            var expectedFundingValidationResult = projectUpdateBatch.ValidateExpectedFunding(viewModel.ProjectGrantAllocationRequests);
+            var allFundSourceAllocations = HttpRequestStorage.DatabaseEntities.FundSourceAllocations.ToList().Select(x => new FundSourceAllocationSimple(x)).OrderBy(p => p.DisplayName).ToList();
+            var expectedFundingValidationResult = projectUpdateBatch.ValidateExpectedFunding(viewModel.ProjectFundSourceAllocationRequests);
             var estimatedTotalCost = projectUpdateBatch.ProjectUpdate.EstimatedTotalCost.GetValueOrDefault();
 
             var viewDataForAngularEditor = new ExpectedFundingViewData.ViewDataForAngularClass(projectUpdateBatch,
-                allGrantAllocations,
+                allFundSourceAllocations,
                 estimatedTotalCost 
                 );
             var isLoa = projectUpdateBatch.Project.ProjectPrograms.Any(x => x.ProgramID == ProjectController.LoaProgramID);
-            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectGrantAllocationRequestUpdates), isLoa);
+            var projectFundingDetailViewData = new ProjectFundingDetailViewData(CurrentPerson, new List<IFundSourceAllocationRequestAmount>(projectUpdateBatch.ProjectFundSourceAllocationRequestUpdates), isLoa);
 
             var viewData = new ExpectedFundingViewData(CurrentPerson, projectUpdateBatch, viewDataForAngularEditor, projectFundingDetailViewData, GetUpdateStatus(projectUpdateBatch), expectedFundingValidationResult);
             return RazorView<ExpectedFunding, ExpectedFundingViewData, ExpectedFundingViewModel>(viewData, viewModel);
@@ -404,9 +416,12 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project);
-            projectUpdateBatch.DeleteProjectGrantAllocationRequestUpdates();
+            projectUpdateBatch.DeleteProjectFundSourceAllocationRequestUpdates();
+            projectUpdateBatch.DeleteProjectFundingSourceUpdates();
             // refresh data
-            ProjectGrantAllocationRequestUpdate.CreateFromProject(projectUpdateBatch);
+            ProjectFundSourceAllocationRequestUpdate.CreateFromProject(projectUpdateBatch);
+            projectUpdateBatch.ProjectUpdate.EstimatedTotalCost = project.EstimatedTotalCost;
+            projectUpdateBatch.ProjectUpdate.ProjectFundingSourceNotes = project.ProjectFundingSourceNotes;
             projectUpdateBatch.TickleLastUpdateDate(CurrentPerson);
             return new ModalDialogFormJsonResult();
         }
@@ -426,7 +441,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var viewData = new PhotosViewData(CurrentPerson, projectUpdateBatch, updateStatus);
@@ -474,7 +489,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
             var viewModel = new LocationSimpleViewModel(projectUpdate.ProjectLocationPoint,
@@ -493,7 +508,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -578,7 +593,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var viewModel = new LocationDetailedViewModel(projectUpdateBatch.LocationDetailedComment, projectUpdateBatch.ProjectLocationUpdates);
             return ViewLocationDetailed(projectUpdateBatch, viewModel);
@@ -593,7 +608,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -829,7 +844,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -958,7 +973,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             var regionIDs = projectUpdateBatch.ProjectRegionUpdates.Select(x => x.DNRUplandRegionID).ToList();
@@ -976,7 +991,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             if (!ModelState.IsValid)
@@ -1072,7 +1087,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             var countiesIDs = projectUpdateBatch.ProjectCountyUpdates.Select(x => x.CountyID).ToList();
@@ -1090,7 +1105,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             if (!ModelState.IsValid)
@@ -1191,7 +1206,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             var priorityLandscapeIDs = projectUpdateBatch.ProjectPriorityLandscapeUpdates.Select(x => x.PriorityLandscapeID).ToList();
@@ -1209,7 +1224,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
 
             if (!ModelState.IsValid)
@@ -1303,7 +1318,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
             var diffUrl = SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(x => x.DiffNotesAndDocuments(projectPrimaryKey));
@@ -1353,7 +1368,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var viewModel =
                 new EditProjectExternalLinksViewModel(
@@ -1371,7 +1386,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             if (!ModelState.IsValid)
             {
@@ -1456,8 +1471,8 @@ namespace ProjectFirma.Web.Controllers
             Check.Require(projectUpdateBatch.IsSubmitted, $"The {FieldDefinition.Project.GetFieldDefinitionLabel()} is not in a state to be ready to be approved!");
             WriteHtmlDiffLogs(projectPrimaryKey, projectUpdateBatch);
 
-            HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Load();
-            var allprojectGrantAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectGrantAllocationRequests.Local;
+            HttpRequestStorage.DatabaseEntities.ProjectFundSourceAllocationRequests.Load();
+            var allprojectFundSourceAllocationRequests = HttpRequestStorage.DatabaseEntities.ProjectFundSourceAllocationRequests.Local;
             HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Load();
             var allprojectFundingSources = HttpRequestStorage.DatabaseEntities.ProjectFundingSources.Local;
             // TODO: Neutered per #1136; most likely will bring back when BOR project starts
@@ -1500,7 +1515,7 @@ namespace ProjectFirma.Web.Controllers
                 allProjectPriorityLandscapes,
                 allProjectRegions,
                 allProjectCounties,
-                allprojectGrantAllocationRequests,
+                allprojectFundSourceAllocationRequests,
                 allProjectOrganizations,
                 allProjectDocuments,
                 allProjectPeople,
@@ -1690,7 +1705,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var viewData = new HistoryViewData(projectUpdateBatch);
             return RazorPartialView<History, HistoryViewData>(viewData);
@@ -1842,21 +1857,22 @@ namespace ProjectFirma.Web.Controllers
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             var projectUpdate = projectUpdateBatch.ProjectUpdate;
-            var originalHtml = GeneratePartialViewForProjectBasics(project);            
-            projectUpdate.CommitChangesToProject(project);
-            HttpRequestStorage.DatabaseEntities.ProjectPrograms.Load();
-            var allProjectPrograms = HttpRequestStorage.DatabaseEntities.ProjectPrograms.Local;
-            ProjectUpdateProgram.CommitChangesToProject(projectUpdateBatch, allProjectPrograms);
-            project.FocusArea = projectUpdate.FocusArea;
-            var updatedHtml = GeneratePartialViewForProjectBasics(project);
+            var originalHtml = GeneratePartialViewForProjectBasics(project);
+            var updatedHtml = GeneratePartialViewForProjectBasics(projectUpdateBatch);
 
             return new HtmlDiffContainer(originalHtml, updatedHtml);
         }
 
         private string GeneratePartialViewForProjectBasics(Project project)
         {
-            var taxonomyLevel = MultiTenantHelpers.GetTaxonomyLevel();
-            var viewData = new ProjectBasicsViewData(project, false, taxonomyLevel);
+            var viewData = new ProjectBasicsViewData(project);
+            var partialViewAsString = RenderPartialViewToString(ProjectBasicsPartialViewPath, viewData);
+            return partialViewAsString;
+        }
+        
+        private string GeneratePartialViewForProjectBasics(ProjectUpdateBatch projectUpdateBatch)
+        {
+            var viewData = new ProjectBasicsViewData(projectUpdateBatch);
             var partialViewAsString = RenderPartialViewToString(ProjectBasicsPartialViewPath, viewData);
             return partialViewAsString;
         }
@@ -1874,42 +1890,51 @@ namespace ProjectFirma.Web.Controllers
         {
             var project = projectPrimaryKey.EntityObject;
             var projectUpdateBatch = GetLatestNotApprovedProjectUpdateBatchAndThrowIfNoneFound(project, $"There is no current {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} Update for {Models.FieldDefinition.Project.GetFieldDefinitionLabel()} {project.DisplayName}");
-            var grantAllocationRequestsOriginal = new List<IGrantAllocationRequestAmount>(project.ProjectGrantAllocationRequests.ToList());
-            var projectGrantAllocationRequestsUpdated = new List<IGrantAllocationRequestAmount>(projectUpdateBatch.ProjectGrantAllocationRequestUpdates.ToList());
-            var originalHtml = GeneratePartialViewForOriginalFundingRequests(grantAllocationRequestsOriginal, projectGrantAllocationRequestsUpdated);
-            var updatedHtml = GeneratePartialViewForModifiedFundingRequests(grantAllocationRequestsOriginal, projectGrantAllocationRequestsUpdated);
+            var estimatedTotalCostOriginal = project.EstimatedTotalCost;
+            var projectFundingSourceNotesOriginal = project.ProjectFundingSourceNotes;
+            var fundingSourcesOriginal = project.ProjectFundingSources.Select(x => x.FundingSource).OrderBy(y => y.FundingSourceID).ToList();
+            
+            var estimatedTotalCostModified = projectUpdateBatch.ProjectUpdate.EstimatedTotalCost;
+            var projectFundingSourceNotesModified = projectUpdateBatch.ProjectUpdate.ProjectFundingSourceNotes;
+            var fundingSourcesModified = projectUpdateBatch.ProjectFundingSourceUpdates.Select(x => x.FundingSource).OrderBy(y => y.FundingSourceID).ToList();
+
+            var fundSourceAllocationRequestsOriginal = new List<IFundSourceAllocationRequestAmount>(project.ProjectFundSourceAllocationRequests.ToList());
+            var projectFundSourceAllocationRequestsUpdated = new List<IFundSourceAllocationRequestAmount>(projectUpdateBatch.ProjectFundSourceAllocationRequestUpdates.ToList());
+            
+            var originalHtml = GeneratePartialViewForOriginalFundingRequests(fundSourceAllocationRequestsOriginal, projectFundSourceAllocationRequestsUpdated, fundingSourcesOriginal, estimatedTotalCostOriginal, projectFundingSourceNotesOriginal, project.IsInLandownerAssistanceProgram);
+            var updatedHtml = GeneratePartialViewForModifiedFundingRequests(fundSourceAllocationRequestsOriginal, projectFundSourceAllocationRequestsUpdated, fundingSourcesModified, estimatedTotalCostModified, projectFundingSourceNotesModified, projectUpdateBatch.Project.IsInLandownerAssistanceProgram);
             return new HtmlDiffContainer(originalHtml, updatedHtml);
         }
 
-        private string GeneratePartialViewForOriginalFundingRequests(List<IGrantAllocationRequestAmount> projectGrantAllocationRequestsOriginal,
-            List<IGrantAllocationRequestAmount> projectGrantAllocationRequestsUpdated)
+        private string GeneratePartialViewForOriginalFundingRequests(List<IFundSourceAllocationRequestAmount> projectFundSourceAllocationRequestsOriginal,
+            List<IFundSourceAllocationRequestAmount> projectFundSourceAllocationRequestsUpdated, List<FundingSource> fundingSources, decimal? estimatedTotalCost, string projectFundingSourceNotes, bool isProjectAnLoaProject)
         {
-            var grantAllocationsInOriginal = projectGrantAllocationRequestsOriginal.Select(x => x.GrantAllocation.GrantAllocationID).ToList();
-            var grantAllocationsInUpdated = projectGrantAllocationRequestsUpdated.Select(x => x.GrantAllocation.GrantAllocationID).ToList();
-            var grantAllocationsOnlyInOriginal = grantAllocationsInOriginal.Where(x => !grantAllocationsInUpdated.Contains(x)).ToList();
-            var grantAllocationRequestAmounts = projectGrantAllocationRequestsOriginal.Select(x => new GrantAllocationRequestAmount(x)).ToList();
-            grantAllocationRequestAmounts.AddRange(projectGrantAllocationRequestsUpdated.Where(x => !grantAllocationsInOriginal.Contains(x.GrantAllocation.GrantAllocationID)).Select(x =>
-                new GrantAllocationRequestAmount(x.GrantAllocation, x.TotalAmount,x.MatchAmount, x.PayAmount, HtmlDiffContainer.DisplayCssClassAddedElement)));
-            grantAllocationRequestAmounts.Where(x => grantAllocationsOnlyInOriginal.Contains(x.GrantAllocation.GrantAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
-            return GeneratePartialViewForExpectedFundingAsString(grantAllocationRequestAmounts);
+            var fundSourceAllocationsInOriginal = projectFundSourceAllocationRequestsOriginal.Select(x => x.FundSourceAllocation.FundSourceAllocationID).ToList();
+            var fundSourceAllocationsInUpdated = projectFundSourceAllocationRequestsUpdated.Select(x => x.FundSourceAllocation.FundSourceAllocationID).ToList();
+            var fundSourceAllocationsOnlyInOriginal = fundSourceAllocationsInOriginal.Where(x => !fundSourceAllocationsInUpdated.Contains(x)).ToList();
+            var fundSourceAllocationRequestAmounts = projectFundSourceAllocationRequestsOriginal.Select(x => new FundSourceAllocationRequestAmount(x)).ToList();
+            fundSourceAllocationRequestAmounts.AddRange(projectFundSourceAllocationRequestsUpdated.Where(x => !fundSourceAllocationsInOriginal.Contains(x.FundSourceAllocation.FundSourceAllocationID)).Select(x =>
+                new FundSourceAllocationRequestAmount(x.FundSourceAllocation, x.TotalAmount,x.MatchAmount, x.PayAmount, HtmlDiffContainer.DisplayCssClassAddedElement)));
+            fundSourceAllocationRequestAmounts.Where(x => fundSourceAllocationsOnlyInOriginal.Contains(x.FundSourceAllocation.FundSourceAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
+            return GeneratePartialViewForExpectedFundingAsString(fundSourceAllocationRequestAmounts, fundingSources, estimatedTotalCost, projectFundingSourceNotes, isProjectAnLoaProject);
         }
 
-        private string GeneratePartialViewForModifiedFundingRequests(List<IGrantAllocationRequestAmount> projectGrantAllocationRequestsOriginal,
-            List<IGrantAllocationRequestAmount> projectGrantAllocationRequestsUpdated)
+        private string GeneratePartialViewForModifiedFundingRequests(List<IFundSourceAllocationRequestAmount> projectFundSourceAllocationRequestsOriginal,
+            List<IFundSourceAllocationRequestAmount> projectFundSourceAllocationRequestsUpdated, List<FundingSource> fundingSources, decimal? estimatedTotalCost, string projectFundingSourceNotes, bool isProjectAnLoaProject)
         {
-            var grantAllocationsInOriginal = projectGrantAllocationRequestsOriginal.Select(x => x.GrantAllocation.GrantAllocationID).ToList();
-            var grantAllocationsInUpdated = projectGrantAllocationRequestsUpdated.Select(x => x.GrantAllocation.GrantAllocationID).ToList();
-            var grantAllocationsOnlyInUpdated = grantAllocationsInUpdated.Where(x => !grantAllocationsInOriginal.Contains(x)).ToList();
-            var grantAllocationRequestAmounts = projectGrantAllocationRequestsUpdated.Select(x => new GrantAllocationRequestAmount(x)).ToList();
-            grantAllocationRequestAmounts.AddRange(projectGrantAllocationRequestsOriginal.Where(x => !grantAllocationsInUpdated.Contains(x.GrantAllocation.GrantAllocationID)).Select(x =>
-                new GrantAllocationRequestAmount(x.GrantAllocation, x.TotalAmount,x.MatchAmount, x.PayAmount, HtmlDiffContainer.DisplayCssClassDeletedElement)));
-            grantAllocationRequestAmounts.Where(x => grantAllocationsOnlyInUpdated.Contains(x.GrantAllocation.GrantAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
-            return GeneratePartialViewForExpectedFundingAsString(grantAllocationRequestAmounts);
+            var fundSourceAllocationsInOriginal = projectFundSourceAllocationRequestsOriginal.Select(x => x.FundSourceAllocation.FundSourceAllocationID).ToList();
+            var fundSourceAllocationsInUpdated = projectFundSourceAllocationRequestsUpdated.Select(x => x.FundSourceAllocation.FundSourceAllocationID).ToList();
+            var fundSourceAllocationsOnlyInUpdated = fundSourceAllocationsInUpdated.Where(x => !fundSourceAllocationsInOriginal.Contains(x)).ToList();
+            var fundSourceAllocationRequestAmounts = projectFundSourceAllocationRequestsUpdated.Select(x => new FundSourceAllocationRequestAmount(x)).ToList();
+            fundSourceAllocationRequestAmounts.AddRange(projectFundSourceAllocationRequestsOriginal.Where(x => !fundSourceAllocationsInUpdated.Contains(x.FundSourceAllocation.FundSourceAllocationID)).Select(x =>
+                new FundSourceAllocationRequestAmount(x.FundSourceAllocation, x.TotalAmount,x.MatchAmount, x.PayAmount, HtmlDiffContainer.DisplayCssClassDeletedElement)));
+            fundSourceAllocationRequestAmounts.Where(x => fundSourceAllocationsOnlyInUpdated.Contains(x.FundSourceAllocation.FundSourceAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
+            return GeneratePartialViewForExpectedFundingAsString(fundSourceAllocationRequestAmounts, fundingSources, estimatedTotalCost, projectFundingSourceNotes, isProjectAnLoaProject);
         }
 
-        private string GeneratePartialViewForExpectedFundingAsString(List<GrantAllocationRequestAmount> grantAllocationRequestAmounts)
+        private string GeneratePartialViewForExpectedFundingAsString(List<FundSourceAllocationRequestAmount> fundSourceAllocationRequestAmounts, List<FundingSource> fundingSources, decimal? estimatedTotalCost, string projectFundingSourceNotes, bool isProjectAnLoaProject)
         {
-            var viewData = new ProjectGrantAllocationRequestsDetailViewData(grantAllocationRequestAmounts);
+            var viewData = new ProjectFundSourceAllocationRequestsDetailViewData(fundSourceAllocationRequestAmounts, fundingSources, estimatedTotalCost, projectFundingSourceNotes, isProjectAnLoaProject);
             var partialViewAsString = RenderPartialViewToString(ProjectExpectedFundingPartialViewPath, viewData);
             return partialViewAsString;
         }
@@ -1958,9 +1983,9 @@ namespace ProjectFirma.Web.Controllers
         //    List<IProjectBudgetAmount> projectBudgetAmountsUpdated,
         //    List<int> calendarYearsUpdated)
         //{
-        //    var grantAllocationsInOriginal = projectBudgetAmountsOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
-        //    var grantAllocationsInUpdated = projectBudgetAmountsUpdated.Select(x => x.GrantAllocationID).Distinct().ToList();
-        //    var grantAllocationsOnlyInOriginal = grantAllocationsInOriginal.Where(x => !grantAllocationsInUpdated.Contains(x)).ToList();
+        //    var fundSourceAllocationsInOriginal = projectBudgetAmountsOriginal.Select(x => x.FundSourceAllocationID).Distinct().ToList();
+        //    var fundSourceAllocationsInUpdated = projectBudgetAmountsUpdated.Select(x => x.FundSourceAllocationID).Distinct().ToList();
+        //    var fundSourceAllocationsOnlyInOriginal = fundSourceAllocationsInOriginal.Where(x => !fundSourceAllocationsInUpdated.Contains(x)).ToList();
 
         //    var projectBudgetAmountsInOriginal = ProjectBudgetAmount2.CreateFromProjectBudgets(projectBudgetAmountsOriginal,
         //        calendarYearsOriginal);
@@ -1974,11 +1999,11 @@ namespace ProjectFirma.Web.Controllers
 
         //    // find the ones that are only in the modified set and add them and mark them as "added"
         //    projectBudgetAmountsInOriginal.AddRange(
-        //        projectBudgetAmountsInUpdated.Where(x => !grantAllocationsInOriginal.Contains(x.GrantAllocationID))
+        //        projectBudgetAmountsInUpdated.Where(x => !fundSourceAllocationsInOriginal.Contains(x.FundSourceAllocationID))
         //            .Select(x => ProjectBudgetAmount2.Clone(x, HtmlDiffContainer.DisplayCssClassAddedElement))
         //            .ToList());
         //    // find the ones only in original and mark them as "deleted"
-        //    projectBudgetAmountsInOriginal.Where(x => grantAllocationsOnlyInOriginal.Contains(x.GrantAllocationID))
+        //    projectBudgetAmountsInOriginal.Where(x => fundSourceAllocationsOnlyInOriginal.Contains(x.FundSourceAllocationID))
         //        .ForEach(x =>
         //        {
         //            ZeroOutBudget(x, calendarYearsOriginal);
@@ -2005,20 +2030,20 @@ namespace ProjectFirma.Web.Controllers
         //    List<IProjectBudgetAmount> projectBudgetAmountsUpdated,
         //    List<int> calendarYearsUpdated)
         //{
-        //    var grantAllocationsInOriginal = projectBudgetAmountsOriginal.Select(x => x.GrantAllocationID).Distinct().ToList();
-        //    var grantAllocationsInUpdated = projectBudgetAmountsUpdated.Select(x => x.GrantAllocationID).Distinct().ToList();
-        //    var grantAllocationsOnlyInUpdated = grantAllocationsInUpdated.Where(x => !grantAllocationsInOriginal.Contains(x)).ToList();
+        //    var fundSourceAllocationsInOriginal = projectBudgetAmountsOriginal.Select(x => x.FundSourceAllocationID).Distinct().ToList();
+        //    var fundSourceAllocationsInUpdated = projectBudgetAmountsUpdated.Select(x => x.FundSourceAllocationID).Distinct().ToList();
+        //    var fundSourceAllocationsOnlyInUpdated = fundSourceAllocationsInUpdated.Where(x => !fundSourceAllocationsInOriginal.Contains(x)).ToList();
 
         //    var projectBudgetAmountsInOriginal = ProjectBudgetAmount2.CreateFromProjectBudgets(projectBudgetAmountsOriginal, calendarYearsOriginal);
         //    var projectBudgetAmountsInUpdated = ProjectBudgetAmount2.CreateFromProjectBudgets(projectBudgetAmountsUpdated, calendarYearsUpdated);
 
         //    // find the ones that are only in the original set and add them and mark them as "deleted"
         //    projectBudgetAmountsInUpdated.AddRange(
-        //        projectBudgetAmountsInOriginal.Where(x => !grantAllocationsInUpdated.Contains(x.GrantAllocationID))
+        //        projectBudgetAmountsInOriginal.Where(x => !fundSourceAllocationsInUpdated.Contains(x.FundSourceAllocationID))
         //            .Select(x => ProjectBudgetAmount2.Clone(x, HtmlDiffContainer.DisplayCssClassDeletedElement))
         //            .ToList());
         //    // find the ones only in modified and mark them as "added"
-        //    projectBudgetAmountsInUpdated.Where(x => grantAllocationsOnlyInUpdated.Contains(x.GrantAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
+        //    projectBudgetAmountsInUpdated.Where(x => fundSourceAllocationsOnlyInUpdated.Contains(x.FundSourceAllocationID)).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
 
         //    var calendarYearStrings = GetCalendarYearStringsForDiffForUpdated(calendarYearsOriginal, calendarYearsUpdated);
         //    return GeneratePartialViewForBudgetsAsString(projectBudgetAmountsInUpdated, calendarYearStrings);
@@ -2174,48 +2199,22 @@ namespace ProjectFirma.Web.Controllers
             var entityExternalLinksOriginal = new List<IEntityExternalLink>(project.ProjectExternalLinks);
             var entityExternalLinksUpdated = new List<IEntityExternalLink>(projectUpdateBatch.ProjectExternalLinkUpdates);
 
-            var originalHtml = GeneratePartialViewForOriginalExternalLinks(entityExternalLinksOriginal, entityExternalLinksUpdated);
-            var updatedHtml = GeneratePartialViewForModifiedExternalLinks(entityExternalLinksOriginal, entityExternalLinksUpdated);
+            var originalHtml = GeneratePartialViewForExternalLinks(entityExternalLinksOriginal);
+            var updatedHtml = GeneratePartialViewForExternalLinks(entityExternalLinksUpdated);
 
             return new HtmlDiffContainer(originalHtml, updatedHtml);
         }
 
-        private string GeneratePartialViewForOriginalExternalLinks(List<IEntityExternalLink> entityExternalLinksOriginal, List<IEntityExternalLink> entityExternalLinksUpdated)
+        private string GeneratePartialViewForExternalLinks(List<IEntityExternalLink> entityExternalLinksOriginal )
         {
-            var urlsInOriginal = entityExternalLinksOriginal.Select(x => x.GetExternalLinkAsUrl()).Distinct().ToList();
-            var urlsInModified = entityExternalLinksUpdated.Select(x => x.GetExternalLinkAsUrl()).Distinct().ToList();
-            var urlsOnlyInOriginal = urlsInOriginal.Where(x => !urlsInModified.Contains(x)).ToList();
 
             var externalLinksOriginal = ExternalLink.CreateFromEntityExternalLink(entityExternalLinksOriginal);
-            var externalLinksUpdated = ExternalLink.CreateFromEntityExternalLink(entityExternalLinksUpdated);
-            // find the ones that are only in the modified set and add them and mark them as "added"
-            externalLinksOriginal.AddRange(
-                externalLinksUpdated.Where(x => !urlsInOriginal.Contains(x.GetExternalLinkAsUrl()))
-                    .Select(x => new ExternalLink(x.ExternalLinkLabel, x.ExternalLinkUrl, HtmlDiffContainer.DisplayCssClassAddedElement))
-                    .ToList());
-            // find the ones only in original and mark them as "deleted"
-            externalLinksOriginal.Where(x => urlsOnlyInOriginal.Contains(x.GetExternalLinkAsUrl())).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassDeletedElement);
-            return GeneratePartialViewForExternalLinks(externalLinksOriginal);
+
+            return GeneratePartialViewForExternalLinksImpl(externalLinksOriginal);
         }
 
-        private string GeneratePartialViewForModifiedExternalLinks(List<IEntityExternalLink> entityExternalLinksOriginal, List<IEntityExternalLink> entityExternalLinksUpdated)
-        {
-            var urlsInOriginal = entityExternalLinksOriginal.Select(x => x.GetExternalLinkAsUrl()).Distinct().ToList();
-            var urlsInUpdated = entityExternalLinksUpdated.Select(x => x.GetExternalLinkAsUrl()).Distinct().ToList();
-            var urlsOnlyInUpdated = urlsInUpdated.Where(x => !urlsInOriginal.Contains(x)).ToList();
 
-            var externalLinksOriginal = ExternalLink.CreateFromEntityExternalLink(entityExternalLinksOriginal);
-            var externalLinksUpdated = ExternalLink.CreateFromEntityExternalLink(entityExternalLinksUpdated);
-            // find the ones that are only in the original set and add them and mark them as "deleted"
-            externalLinksUpdated.AddRange(
-                externalLinksOriginal.Where(x => !urlsInUpdated.Contains(x.GetExternalLinkAsUrl()))
-                    .Select(x => new ExternalLink(x.ExternalLinkLabel, x.ExternalLinkUrl, HtmlDiffContainer.DisplayCssClassDeletedElement))
-                    .ToList());
-            externalLinksUpdated.Where(x => urlsOnlyInUpdated.Contains(x.GetExternalLinkAsUrl())).ForEach(x => x.DisplayCssClass = HtmlDiffContainer.DisplayCssClassAddedElement);
-            return GeneratePartialViewForExternalLinks(externalLinksUpdated);
-        }
-
-        private string GeneratePartialViewForExternalLinks(List<ExternalLink> entityExternalLinks)
+        private string GeneratePartialViewForExternalLinksImpl(List<ExternalLink> entityExternalLinks)
         {
             var viewData = new EntityExternalLinksViewData(entityExternalLinks);
             var partialViewToString = RenderPartialViewToString(ExternalLinksPartialViewPath, viewData);
@@ -2487,13 +2486,14 @@ namespace ProjectFirma.Web.Controllers
             var isExternalLinksUpdated = DiffExternalLinksImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isNotesUpdated = DiffNotesAndDocumentsImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isTreatmentsUpdated = false;  // MCS the ability to diff treatments will be added in a different story
-            //Must be called last, since basics actually changes the Project object which can break the other Diff functions
-            var isBasicsUpdated = DiffBasicsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             var isExpectedFundingUpdated = DiffExpectedFundingImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             var isOrganizationsUpdated = DiffOrganizationsImpl(projectUpdateBatch.ProjectID).HasChanged;
             var isContactsUpdated = DiffContactsImpl(projectUpdateBatch.ProjectID).HasChanged;
+
+            //Must be called last, since basics actually changes the Project object which can break the other Diff functions
+            var isBasicsUpdated = DiffBasicsImpl(projectUpdateBatch.ProjectID).HasChanged;
 
             return new UpdateStatus(isBasicsUpdated,
                 // ReSharper disable once ConditionIsAlwaysTrueOrFalse
@@ -2868,7 +2868,7 @@ namespace ProjectFirma.Web.Controllers
             var projectUpdateBatch = project.GetLatestNotApprovedUpdateBatch();
             if (projectUpdateBatch == null)
             {
-                return RedirectToAction(new SitkaRoute<ProjectUpdateController>(x => x.Instructions(project)));
+                return RedirectToAction(new SitkaRoute<ProjectController>(x => x.Detail(project)));
             }
             var updateStatus = GetUpdateStatus(projectUpdateBatch);
 

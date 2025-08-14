@@ -25,7 +25,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         protected ProgramIndex()
         {
-            this.GrantAllocationProgramIndexProjectCodes = new HashSet<GrantAllocationProgramIndexProjectCode>();
+            this.FundSourceAllocationProgramIndexProjectCodes = new HashSet<FundSourceAllocationProgramIndexProjectCode>();
             this.Invoices = new HashSet<Invoice>();
         }
 
@@ -72,7 +72,7 @@ namespace ProjectFirma.Web.Models
         /// <returns></returns>
         public bool HasDependentObjects()
         {
-            return GrantAllocationProgramIndexProjectCodes.Any() || Invoices.Any();
+            return FundSourceAllocationProgramIndexProjectCodes.Any() || Invoices.Any();
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace ProjectFirma.Web.Models
         {
             var dependentObjects = new List<string>();
             
-            if(GrantAllocationProgramIndexProjectCodes.Any())
+            if(FundSourceAllocationProgramIndexProjectCodes.Any())
             {
-                dependentObjects.Add(typeof(GrantAllocationProgramIndexProjectCode).Name);
+                dependentObjects.Add(typeof(FundSourceAllocationProgramIndexProjectCode).Name);
             }
 
             if(Invoices.Any())
@@ -97,7 +97,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Dependent type names of this entity
         /// </summary>
-        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndex).Name, typeof(GrantAllocationProgramIndexProjectCode).Name, typeof(Invoice).Name};
+        public static readonly List<string> DependentEntityTypeNames = new List<string> {typeof(ProgramIndex).Name, typeof(FundSourceAllocationProgramIndexProjectCode).Name, typeof(Invoice).Name};
 
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace ProjectFirma.Web.Models
         public void DeleteChildren(DatabaseEntities dbContext)
         {
 
-            foreach(var x in GrantAllocationProgramIndexProjectCodes.ToList())
+            foreach(var x in FundSourceAllocationProgramIndexProjectCodes.ToList())
             {
                 x.DeleteFull(dbContext);
             }
@@ -145,7 +145,7 @@ namespace ProjectFirma.Web.Models
         [NotMapped]
         public int PrimaryKey { get { return ProgramIndexID; } set { ProgramIndexID = value; } }
 
-        public virtual ICollection<GrantAllocationProgramIndexProjectCode> GrantAllocationProgramIndexProjectCodes { get; set; }
+        public virtual ICollection<FundSourceAllocationProgramIndexProjectCode> FundSourceAllocationProgramIndexProjectCodes { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
 
         public static class FieldLengths

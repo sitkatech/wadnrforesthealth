@@ -38,16 +38,17 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
         public readonly bool UserHasRegionManagePermissions;
         public readonly string IndexUrl;
         public readonly ProjectInfoGridSpecForRegionDetail BasicProjectInfoGridSpec;
-        public readonly AssociatedGrantAllocationsGridSpec AssociatedGrantAllocationsGridSpec;
+        public readonly AssociatedFundSourceAllocationsGridSpec AssociatedFundSourceAllocationsGridSpec;
         public readonly string BasicProjectInfoGridName;
-        public readonly string AssociatedGrantAllocationsGridName;
+        public readonly string AssociatedFundSourceAllocationsGridName;
         public readonly string BasicProjectInfoGridDataUrl;
-        public readonly string AssociatedGrantAllocationsGridDataUrl;
+        public readonly string AssociatedFundSourceAllocationsGridDataUrl;
         public readonly MapInitJson MapInitJson;
         public readonly ViewGoogleChartViewData ViewGoogleChartViewData;
 
         public string EditContactUrl { get; }
         public string EditPageContentUrl { get; }
+        public bool UserHasAccountWithRole { get; }
 
         public DetailViewData(Person currentPerson, Models.DNRUplandRegion dnrUplandRegion, MapInitJson mapInitJson, ViewGoogleChartViewData viewGoogleChartViewData) : base(currentPerson)
         {
@@ -57,6 +58,7 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             PageTitle = dnrUplandRegion.DNRUplandRegionName;
             EntityName = Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel();
             UserHasRegionManagePermissions = new DNRUplandRegionManageFeature().HasPermissionByPerson(currentPerson);
+            UserHasAccountWithRole = !currentPerson.IsAnonymousOrUnassigned;
             IndexUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.Index());
 
             BasicProjectInfoGridName = "regionProjectListGrid";
@@ -68,14 +70,14 @@ namespace ProjectFirma.Web.Views.DNRUplandRegion
             };
             BasicProjectInfoGridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.ProjectsGridJsonData(dnrUplandRegion));
 
-            AssociatedGrantAllocationsGridName = "regionGrantAllocationsListGrid";
-            AssociatedGrantAllocationsGridSpec = new AssociatedGrantAllocationsGridSpec()
+            AssociatedFundSourceAllocationsGridName = "regionFundSourceAllocationsListGrid";
+            AssociatedFundSourceAllocationsGridSpec = new AssociatedFundSourceAllocationsGridSpec()
             {
-                ObjectNameSingular = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabel()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
-                ObjectNamePlural = $"{Models.FieldDefinition.GrantAllocation.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
+                ObjectNameSingular = $"{Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
+                ObjectNamePlural = $"{Models.FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabelPluralized()} in this {Models.FieldDefinition.DNRUplandRegion.GetFieldDefinitionLabel()}",
                 SaveFiltersInCookie = true
             };
-            AssociatedGrantAllocationsGridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.GrantAllocationsGridJsonData(dnrUplandRegion));
+            AssociatedFundSourceAllocationsGridDataUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(tc => tc.FundSourceAllocationsGridJsonData(dnrUplandRegion));
 
             EditContactUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.EditContact(dnrUplandRegion));
             EditPageContentUrl = SitkaRoute<DNRUplandRegionController>.BuildUrlFromExpression(x => x.EditPageContent(dnrUplandRegion));

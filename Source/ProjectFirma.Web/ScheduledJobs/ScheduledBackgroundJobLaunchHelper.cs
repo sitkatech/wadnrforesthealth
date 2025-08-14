@@ -42,9 +42,9 @@ namespace ProjectFirma.Web.ScheduledJobs
             ProgramIndexImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
 
-        public static void RunGrantExpenditureImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
+        public static void RunFundSourceExpenditureImportScheduledBackgroundJob(IJobCancellationToken jobCancellationToken)
         {
-            GrantExpenditureImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
+            FundSourceExpenditureImportHangfireBackgroundJob.Instance.RunJob(jobCancellationToken);
         }
 
 

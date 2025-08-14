@@ -12,7 +12,7 @@ namespace ProjectFirma.Web.Models
         public string AgreementStatusDisplay => AgreementStatus != null ? AgreementStatus.AgreementStatusName : string.Empty;
 
         // read-only Helper accessors
-        public List<ProgramIndex> ProgramIndices => this.AgreementGrantAllocations.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
-        public List<ProjectCode> ProjectCodes => this.AgreementGrantAllocations.SelectMany(aga => aga.GrantAllocation.GrantAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
+        public List<ProgramIndex> ProgramIndices => this.AgreementFundSourceAllocations.SelectMany(aga => aga.FundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes).Select(pi => pi.ProgramIndex).Where(pi => pi != null).ToList();
+        public List<ProjectCode> ProjectCodes => this.AgreementFundSourceAllocations.SelectMany(aga => aga.FundSourceAllocation.FundSourceAllocationProgramIndexProjectCodes).Select(pc => pc.ProjectCode).Where(pc => pc != null).ToList();
     }
 }

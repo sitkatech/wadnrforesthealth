@@ -82,7 +82,7 @@ namespace ProjectFirma.Web.Models
             return DeleteProposalUrlTemplate.ParameterReplace(project.ProjectID);
         }
 
-        public static readonly UrlTemplate<int> ProjectUpdateUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(t => t.Instructions(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> ProjectUpdateUrlTemplate = new UrlTemplate<int>(SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(t => t.Basics(UrlTemplate.Parameter1Int)));
         public static string GetProjectUpdateUrl(this Project project)
         {
             return ProjectUpdateUrlTemplate.ParameterReplace(project.ProjectID);
@@ -164,7 +164,7 @@ namespace ProjectFirma.Web.Models
                 return fundingSourcesForDisplay;
             }
 
-            return $"No {FieldDefinition.FundingSource.FieldDefinitionDisplayName} selected.";
+            return $"None identified";
         }
 
         public static Organization GetLeadImplementer(this Project project)
@@ -172,10 +172,10 @@ namespace ProjectFirma.Web.Models
             return project.ProjectOrganizations.Where(x => x.RelationshipTypeID == RelationshipType.LeadImplementerID).Select(x => x.Organization).SingleOrDefault();
         }
 
-        public static string GetExpectedFundingGrantAllocationsAsCommaDelimitedListForAgGrid(this Project project)
+        public static string GetExpectedFundingFundSourceAllocationsAsCommaDelimitedListForAgGrid(this Project project)
         {
-            var grantAllocations = project.ProjectGrantAllocationRequests.Select(x => x.GrantAllocation);
-            return grantAllocations.Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl)).ToJsonArrayForAgGrid();
+            var fundSourceAllocations = project.ProjectFundSourceAllocationRequests.Select(x => x.FundSourceAllocation);
+            return fundSourceAllocations.Select(x => new HtmlLinkObject(x.DisplayName, x.SummaryUrl)).ToJsonArrayForAgGrid();
         }
     }
 }

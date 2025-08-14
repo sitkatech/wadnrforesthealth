@@ -41,15 +41,15 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             _warningMessages = new List<string>();
 
-            if (projectUpdate.GetImplementationStartYear() == null && projectUpdate.ProjectStage != ProjectStage.Cancelled)
-            {
-                _warningMessages.Add(ImplementationStartYearIsRequired);
-            }
+            //if (projectUpdate.GetImplementationStartYear() == null && projectUpdate.ProjectStage != ProjectStage.Cancelled)
+            //{
+            //    _warningMessages.Add(ImplementationStartYearIsRequired);
+            //}
                         
-            if ((projectUpdate.ProjectStage == ProjectStage.Completed) && projectUpdate.GetCompletionYear() == null)
-            {
-                _warningMessages.Add(CompletionDateIsRequired);
-            }
+            //if ((projectUpdate.ProjectStage == ProjectStage.Completed) && projectUpdate.GetCompletionYear() == null)
+            //{
+            //    _warningMessages.Add(CompletionDateIsRequired);
+            //}
 
             
             var currentYear = FirmaDateUtilities.CalculateCurrentYearToUseForUpToAllowableInputInReporting();

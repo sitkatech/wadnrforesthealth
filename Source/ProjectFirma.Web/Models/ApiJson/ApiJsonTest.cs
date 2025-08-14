@@ -119,43 +119,43 @@ namespace ProjectFirma.Web.Models.ApiJson
         }
 
         [Test]
-        public void TestGrantJsonApi()
+        public void TestFundSourceJsonApi()
         {
-            var grantJsonUrl = SitkaRoute<GrantController>.BuildAbsoluteUrlHttpsFromExpression(c => c.GrantJsonApi());
+            var fundSourceJsonUrl = SitkaRoute<FundSourceController>.BuildAbsoluteUrlHttpsFromExpression(c => c.FundSourceJsonApi());
             var webClient = new WebClient();
-            var jsonContent = webClient.DownloadString(grantJsonUrl);
+            var jsonContent = webClient.DownloadString(fundSourceJsonUrl);
 
-            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {grantJsonUrl}");
+            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {fundSourceJsonUrl}");
         }
 
         [Test]
-        public void TestGrantStatusJsonApi()
+        public void TestFundSourceStatusJsonApi()
         {
-            var grantStatusJsonUrl = SitkaRoute<GrantController>.BuildAbsoluteUrlHttpsFromExpression(c => c.GrantStatusJsonApi());
+            var fundSourceStatusJsonUrl = SitkaRoute<FundSourceController>.BuildAbsoluteUrlHttpsFromExpression(c => c.FundSourceStatusJsonApi());
             var webClient = new WebClient();
-            var jsonContent = webClient.DownloadString(grantStatusJsonUrl);
+            var jsonContent = webClient.DownloadString(fundSourceStatusJsonUrl);
 
-            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {grantStatusJsonUrl}");
+            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {fundSourceStatusJsonUrl}");
         }
 
         [Test]
-        public void TestGrantAllocationJsonApi()
+        public void TestFundSourceAllocationJsonApi()
         {
-            var grantAllocationJsonUrl = SitkaRoute<GrantAllocationController>.BuildAbsoluteUrlHttpsFromExpression(c => c.GrantAllocationJsonApi());
+            var fundSourceAllocationJsonUrl = SitkaRoute<FundSourceAllocationController>.BuildAbsoluteUrlHttpsFromExpression(c => c.FundSourceAllocationJsonApi());
             var webClient = new WebClient();
-            var jsonContent = webClient.DownloadString(grantAllocationJsonUrl);
+            var jsonContent = webClient.DownloadString(fundSourceAllocationJsonUrl);
 
-            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {grantAllocationJsonUrl}");
+            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {fundSourceAllocationJsonUrl}");
         }
 
         [Test]
-        public void TestGrantAllocationProgramIndexProjectCodeJsonApi()
+        public void TestFundSourceAllocationProgramIndexProjectCodeJsonApi()
         {
-            var grantAllocationProgramIndexProjectCodeJsonUrl = SitkaRoute<GrantAllocationProgramIndexProjectCodeController>.BuildAbsoluteUrlHttpsFromExpression(c => c.GrantAllocationProgramIndexProjectCodeJsonApi());
+            var fundSourceAllocationProgramIndexProjectCodeJsonUrl = SitkaRoute<FundSourceAllocationProgramIndexProjectCodeController>.BuildAbsoluteUrlHttpsFromExpression(c => c.FundSourceAllocationProgramIndexProjectCodeJsonApi());
             var webClient = new WebClient();
-            var jsonContent = webClient.DownloadString(grantAllocationProgramIndexProjectCodeJsonUrl);
+            var jsonContent = webClient.DownloadString(fundSourceAllocationProgramIndexProjectCodeJsonUrl);
 
-            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {grantAllocationProgramIndexProjectCodeJsonUrl}");
+            Assert.IsNotEmpty(jsonContent, $"Got nothing at all back from URL {fundSourceAllocationProgramIndexProjectCodeJsonUrl}");
         }
 
 

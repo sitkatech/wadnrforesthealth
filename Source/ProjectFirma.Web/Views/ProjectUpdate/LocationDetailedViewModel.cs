@@ -53,5 +53,10 @@ namespace ProjectFirma.Web.Views.ProjectUpdate
         {
             Comments = comments;
         }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return new List<ValidationResult>();
+        }
     }
 }

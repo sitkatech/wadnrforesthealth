@@ -22,7 +22,7 @@ namespace ProjectFirma.Web.Models
         public static readonly ArcOnlineFinanceApiRawJsonImportTableTypeVendor Vendor = ArcOnlineFinanceApiRawJsonImportTableTypeVendor.Instance;
         public static readonly ArcOnlineFinanceApiRawJsonImportTableTypeProgramIndex ProgramIndex = ArcOnlineFinanceApiRawJsonImportTableTypeProgramIndex.Instance;
         public static readonly ArcOnlineFinanceApiRawJsonImportTableTypeProjectCode ProjectCode = ArcOnlineFinanceApiRawJsonImportTableTypeProjectCode.Instance;
-        public static readonly ArcOnlineFinanceApiRawJsonImportTableTypeGrantExpenditure GrantExpenditure = ArcOnlineFinanceApiRawJsonImportTableTypeGrantExpenditure.Instance;
+        public static readonly ArcOnlineFinanceApiRawJsonImportTableTypeFundSourceExpenditure FundSourceExpenditure = ArcOnlineFinanceApiRawJsonImportTableTypeFundSourceExpenditure.Instance;
 
         public static readonly List<ArcOnlineFinanceApiRawJsonImportTableType> All;
         public static readonly ReadOnlyDictionary<int, ArcOnlineFinanceApiRawJsonImportTableType> AllLookupDictionary;
@@ -32,7 +32,7 @@ namespace ProjectFirma.Web.Models
         /// </summary>
         static ArcOnlineFinanceApiRawJsonImportTableType()
         {
-            All = new List<ArcOnlineFinanceApiRawJsonImportTableType> { Vendor, ProgramIndex, ProjectCode, GrantExpenditure };
+            All = new List<ArcOnlineFinanceApiRawJsonImportTableType> { Vendor, ProgramIndex, ProjectCode, FundSourceExpenditure };
             AllLookupDictionary = new ReadOnlyDictionary<int, ArcOnlineFinanceApiRawJsonImportTableType>(All.ToDictionary(x => x.ArcOnlineFinanceApiRawJsonImportTableTypeID));
         }
 
@@ -100,8 +100,8 @@ namespace ProjectFirma.Web.Models
         {
             switch (enumValue)
             {
-                case ArcOnlineFinanceApiRawJsonImportTableTypeEnum.GrantExpenditure:
-                    return GrantExpenditure;
+                case ArcOnlineFinanceApiRawJsonImportTableTypeEnum.FundSourceExpenditure:
+                    return FundSourceExpenditure;
                 case ArcOnlineFinanceApiRawJsonImportTableTypeEnum.ProgramIndex:
                     return ProgramIndex;
                 case ArcOnlineFinanceApiRawJsonImportTableTypeEnum.ProjectCode:
@@ -119,7 +119,7 @@ namespace ProjectFirma.Web.Models
         Vendor = 1,
         ProgramIndex = 2,
         ProjectCode = 3,
-        GrantExpenditure = 4
+        FundSourceExpenditure = 4
     }
 
     public partial class ArcOnlineFinanceApiRawJsonImportTableTypeVendor : ArcOnlineFinanceApiRawJsonImportTableType
@@ -140,9 +140,9 @@ namespace ProjectFirma.Web.Models
         public static readonly ArcOnlineFinanceApiRawJsonImportTableTypeProjectCode Instance = new ArcOnlineFinanceApiRawJsonImportTableTypeProjectCode(3, @"ProjectCode");
     }
 
-    public partial class ArcOnlineFinanceApiRawJsonImportTableTypeGrantExpenditure : ArcOnlineFinanceApiRawJsonImportTableType
+    public partial class ArcOnlineFinanceApiRawJsonImportTableTypeFundSourceExpenditure : ArcOnlineFinanceApiRawJsonImportTableType
     {
-        private ArcOnlineFinanceApiRawJsonImportTableTypeGrantExpenditure(int arcOnlineFinanceApiRawJsonImportTableTypeID, string arcOnlineFinanceApiRawJsonImportTableTypeName) : base(arcOnlineFinanceApiRawJsonImportTableTypeID, arcOnlineFinanceApiRawJsonImportTableTypeName) {}
-        public static readonly ArcOnlineFinanceApiRawJsonImportTableTypeGrantExpenditure Instance = new ArcOnlineFinanceApiRawJsonImportTableTypeGrantExpenditure(4, @"GrantExpenditure");
+        private ArcOnlineFinanceApiRawJsonImportTableTypeFundSourceExpenditure(int arcOnlineFinanceApiRawJsonImportTableTypeID, string arcOnlineFinanceApiRawJsonImportTableTypeName) : base(arcOnlineFinanceApiRawJsonImportTableTypeID, arcOnlineFinanceApiRawJsonImportTableTypeName) {}
+        public static readonly ArcOnlineFinanceApiRawJsonImportTableTypeFundSourceExpenditure Instance = new ArcOnlineFinanceApiRawJsonImportTableTypeFundSourceExpenditure(4, @"FundSourceExpenditure");
     }
 }

@@ -162,14 +162,14 @@ namespace ProjectFirma.Web.Models
     {
         public override string GetViewUrl() => SitkaRoute<FocusAreaController>.BuildUrlFromExpression(c => c.Index());
     }
-    public partial class FirmaPageTypeFullGrantList
+    public partial class FirmaPageTypeFullFundSourceList
     {
-        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+        public override string GetViewUrl() => SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
     }
 
-    public partial class FirmaPageTypeFullGrantAllocationList
+    public partial class FirmaPageTypeFullFundSourceAllocationList
     {
-        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+        public override string GetViewUrl() => SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
     }
 
     public partial class FirmaPageTypePriorityLandscapesList
@@ -184,7 +184,7 @@ namespace ProjectFirma.Web.Models
 
     public partial class FirmaPageTypeFullAgreementList
     {
-        public override string GetViewUrl() => SitkaRoute<GrantController>.BuildUrlFromExpression(c => c.Index());
+        public override string GetViewUrl() => SitkaRoute<FundSourceController>.BuildUrlFromExpression(c => c.Index());
     }
 
 
@@ -239,5 +239,10 @@ namespace ProjectFirma.Web.Models
     public partial class FirmaPageTypeProjectCreateInstructions
     {
         public override string GetViewUrl() => SitkaRoute<ProjectCreateController>.BuildUrlFromExpression(c => c.CreateAndEditBasics());
+    }
+
+    public partial class FirmaPageTypeProjectUpdateInstructions
+    {
+        public override string GetViewUrl() => SitkaRoute<ProjectUpdateController>.BuildUrlFromExpression(c => c.Basics(null));
     }
 }

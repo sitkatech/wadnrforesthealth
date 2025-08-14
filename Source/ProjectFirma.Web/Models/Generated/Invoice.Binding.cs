@@ -31,7 +31,7 @@ namespace ProjectFirma.Web.Models
         /// <summary>
         /// Constructor for building a new object with MaximalConstructor required fields in preparation for insert into database
         /// </summary>
-        public Invoice(int invoiceID, string invoiceIdentifyingName, DateTime invoiceDate, decimal? paymentAmount, int invoiceApprovalStatusID, string invoiceApprovalStatusComment, int invoiceMatchAmountTypeID, decimal? matchAmount, int invoiceStatusID, int? invoiceFileResourceID, int invoicePaymentRequestID, int? grantID, int? programIndexID, int? projectCodeID, int? organizationCodeID, string invoiceNumber, string fund, string appn, string subObject) : this()
+        public Invoice(int invoiceID, string invoiceIdentifyingName, DateTime invoiceDate, decimal? paymentAmount, int invoiceApprovalStatusID, string invoiceApprovalStatusComment, int invoiceMatchAmountTypeID, decimal? matchAmount, int invoiceStatusID, int? invoiceFileResourceID, int invoicePaymentRequestID, int? fundSourceID, int? programIndexID, int? projectCodeID, int? organizationCodeID, string invoiceNumber, string fund, string appn, string subObject) : this()
         {
             this.InvoiceID = invoiceID;
             this.InvoiceIdentifyingName = invoiceIdentifyingName;
@@ -44,7 +44,7 @@ namespace ProjectFirma.Web.Models
             this.InvoiceStatusID = invoiceStatusID;
             this.InvoiceFileResourceID = invoiceFileResourceID;
             this.InvoicePaymentRequestID = invoicePaymentRequestID;
-            this.GrantID = grantID;
+            this.FundSourceID = fundSourceID;
             this.ProgramIndexID = programIndexID;
             this.ProjectCodeID = projectCodeID;
             this.OrganizationCodeID = organizationCodeID;
@@ -149,7 +149,7 @@ namespace ProjectFirma.Web.Models
         public int InvoiceStatusID { get; set; }
         public int? InvoiceFileResourceID { get; set; }
         public int InvoicePaymentRequestID { get; set; }
-        public int? GrantID { get; set; }
+        public int? FundSourceID { get; set; }
         public int? ProgramIndexID { get; set; }
         public int? ProjectCodeID { get; set; }
         public int? OrganizationCodeID { get; set; }
@@ -165,7 +165,7 @@ namespace ProjectFirma.Web.Models
         public InvoiceStatus InvoiceStatus { get { return InvoiceStatus.AllLookupDictionary[InvoiceStatusID]; } }
         public virtual FileResource InvoiceFileResource { get; set; }
         public virtual InvoicePaymentRequest InvoicePaymentRequest { get; set; }
-        public virtual Grant Grant { get; set; }
+        public virtual FundSource FundSource { get; set; }
         public virtual ProgramIndex ProgramIndex { get; set; }
         public virtual ProjectCode ProjectCode { get; set; }
         public virtual OrganizationCode OrganizationCode { get; set; }

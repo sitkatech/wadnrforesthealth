@@ -24,41 +24,42 @@
 @inherits ProjectFirma.Web.Views.ProjectFunding.ProjectFundingDetail
 <div class="table-responsive">
 
-    @if (ViewDataTyped.GrantAllocationRequestAmounts.Any())
+    @if (ViewDataTyped.FundSourceAllocationRequestAmounts.Any())
     {
+        <p>The table below shows the identified fund source allocations contributing to the project cost. This may not be a comprehensive list of all project funding sources, nor an estimate of the full project cost.</p>
         <div style="overflow-x: auto">
             <table class="table table-striped table-condensed table-hover">
                 <tr>
-                    <th>@Html.LabelWithSugarFor(FieldDefinition.GrantAllocation)</th>
+                    <th>@Html.LabelWithSugarFor(FieldDefinition.FundSourceAllocation)</th>
                     @if (ViewDataTyped.IsMatchAndPayRelevant)
                     {
-                        <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestMatchAmount)</th>
-                        <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestPayAmount)</th>
+                        <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectFundSourceAllocationRequestMatchAmount)</th>
+                        <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectFundSourceAllocationRequestPayAmount)</th>
                     }
-                    <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectGrantAllocationRequestTotalAmount)</th>
+                    <th style="text-align: right">@Html.LabelWithSugarFor(FieldDefinition.ProjectFundSourceAllocationRequestTotalAmount)</th>
                 </tr>
-                @foreach (var grantAllocationRequestAmount in ViewDataTyped.GrantAllocationRequestAmounts.OrderBy(x => x.GrantAllocation.DisplayName))
+                @foreach (var fundSourceAllocationRequestAmount in ViewDataTyped.FundSourceAllocationRequestAmounts.OrderBy(x => x.FundSourceAllocation.DisplayName))
                 {
                     <tr>
-                        <td>@Html.Raw(grantAllocationRequestAmount.GrantAllocation.GrantNumberAndGrantAllocationDisplayNameAsUrl)</td>
+                        <td>@Html.Raw(fundSourceAllocationRequestAmount.FundSourceAllocation.FundSourceNumberAndFundSourceAllocationDisplayNameAsUrl)</td>
                         @if (ViewDataTyped.IsMatchAndPayRelevant)
                         {
-                            <th class="text-right">@grantAllocationRequestAmount.MatchAmount.ToStringCurrency()</th>
-                            <th class="text-right">@grantAllocationRequestAmount.PayAmount.ToStringCurrency()</th>
+                            <th class="text-right">@fundSourceAllocationRequestAmount.MatchAmount.ToStringCurrency()</th>
+                            <th class="text-right">@fundSourceAllocationRequestAmount.PayAmount.ToStringCurrency()</th>
                         }
-                        <th class="text-right">@grantAllocationRequestAmount.TotalAmount.ToStringCurrency()</th>
+                        <th class="text-right">@fundSourceAllocationRequestAmount.TotalAmount.ToStringCurrency()</th>
                     </tr>
                 }
-                @if (ViewDataTyped.GrantAllocationRequestAmounts.Any())
+                @if (ViewDataTyped.FundSourceAllocationRequestAmounts.Any())
                 {
                     <tr>
                         <th class="text-right">Total</th>
                         @if (ViewDataTyped.IsMatchAndPayRelevant)
                         {
-                            <th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.MatchAmount).ToStringCurrency()</th>
-                            <th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.PayAmount).ToStringCurrency()</th>
+                            <th class="text-right">@ViewDataTyped.FundSourceAllocationRequestAmounts.Sum(x => x.MatchAmount).ToStringCurrency()</th>
+                            <th class="text-right">@ViewDataTyped.FundSourceAllocationRequestAmounts.Sum(x => x.PayAmount).ToStringCurrency()</th>
                         }
-                        <th class="text-right">@ViewDataTyped.GrantAllocationRequestAmounts.Sum(x => x.TotalAmount).ToStringCurrency()</th>
+                        <th class="text-right">@ViewDataTyped.FundSourceAllocationRequestAmounts.Sum(x => x.TotalAmount).ToStringCurrency()</th>
                     </tr>
                 }
             </table>
@@ -66,6 +67,6 @@
     }
     else
     {
-        <p class="systemText">No @FieldDefinition.GrantAllocation.GetFieldDefinitionLabel() identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
+        <p class="systemText">No @FieldDefinition.FundSourceAllocation.GetFieldDefinitionLabel() identified for this @FieldDefinition.Project.GetFieldDefinitionLabel().</p>
     }
 </div>

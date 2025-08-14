@@ -33,7 +33,30 @@
             <th class="col-sm-3">@Html.LabelWithSugarFor(FieldDefinition.ProjectRelationshipType)</th>
             <th class="col-sm-9">@Html.LabelWithSugarFor(FieldDefinition.Organization)</th>
         </tr>
-        @foreach (var relationshipType in ViewDataTyped.SetRelationshipTypes.OrderBy(x => x.RelationshipTypeName))
+        
+        @if (ViewDataTyped.SetRelationshipTypes.SingleOrDefault(x => x.IsPrimaryContact) != null)
+        {
+            var primaryContactRelationshipType = ViewDataTyped.SetRelationshipTypes.Single(x => x.IsPrimaryContact);
+            var primaryContactOrgs = ViewDataTyped.AllProjectOrganizations.Where(x => x.RelationshipType == primaryContactRelationshipType).OrderBy(x => x.Organization.OrganizationName).ToList();
+            <tr>
+
+                <td>@primaryContactRelationshipType.RelationshipTypeName</td>
+                <td>
+                    <ul style="list-style-type: none; padding-left: 0; margin-left: 0;">
+                        @foreach (var x in primaryContactOrgs)
+                        {
+                            <li>
+                                <span class="@x.DisplayCssClass">@x.Organization.GetDisplayNameWithoutAbbreviationAsUrl()</span>
+                            </li>
+                        }
+                    </ul>
+                </td>
+
+            </tr>
+
+        }
+
+        @foreach (var relationshipType in ViewDataTyped.SetRelationshipTypes.Where(x => !x.IsPrimaryContact).OrderBy(x => x.RelationshipTypeName))
         {
             var projectOrganizations = ViewDataTyped.AllProjectOrganizations.Where(x => x.RelationshipType == relationshipType).OrderBy(x => x.Organization.OrganizationName).ToList();
             <tr>

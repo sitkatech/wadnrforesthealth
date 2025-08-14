@@ -6,6 +6,6 @@ namespace ProjectFirma.Web.Security
     [SecurityFeatureDescription("Edit Agreement")]
     public class AgreementEditAsAdminFeature : FirmaFeature
     {
-        public AgreementEditAsAdminFeature() : base(new List<Role> {Role.EsaAdmin, Role.Admin, Role.CanManageGrantsAndAgreements }) { }
+        public AgreementEditAsAdminFeature() : base(new List<Role> {Role.EsaAdmin, Role.Admin, Role.CanManageFundSourcesAndAgreements }) { }
     }
 }

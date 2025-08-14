@@ -32,8 +32,8 @@ values
 --(53, 'ManageProjectCustomAttributeTypesList', 'Manage Project Custom Attribute Types List', 2),
 (54, 'FactSheetCustomText', 'Fact Sheet Custom Text', 2),
 (55, 'FocusAreasList', 'Focus Areas List', 1),
-(56, 'FullGrantList', 'Full Grant List', 1),
-(57, 'FullGrantAllocationList', 'Full Grant Allocation List', 1),
+(56, 'FullFundSourceList', 'Full Fund Source List', 1),
+(57, 'FullFundSourceAllocationList', 'Full Fund Source Allocation List', 1),
 (58, 'RegionsList', 'Regions List', 1),
 (59, 'PriorityLandscapesList', 'Priority Landscapes List', 1),
 (60, 'FullAgreementList', 'Full Agreement List', 1),
@@ -52,4 +52,5 @@ values
 (72, 'ReportProjects', 'Report Projects', 1),
 (73, 'ReportAddReport', 'Add a Report', 2),
 (74, 'Vendor', 'Vendors', 1),
-(75, 'ProjectCreateInstructions', 'Project Create Instructions', 2)
+(75, 'ProjectCreateInstructions', 'Project Create Instructions', 2),
+(76, 'ProjectUpdateInstructions', 'Project Update Instructions', 2)

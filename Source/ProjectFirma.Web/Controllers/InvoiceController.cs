@@ -97,12 +97,12 @@ namespace ProjectFirma.Web.Controllers
             var invoiceApprovalStatuses = InvoiceApprovalStatus.All;
             var invoiceStatuses = InvoiceStatus.All.OrderBy(x => x.InvoiceStatusID).ToList();
             var people = HttpRequestStorage.DatabaseEntities.People.GetActivePeople();
-            var grants = HttpRequestStorage.DatabaseEntities.Grants.OrderBy(x => x.GrantNumber);
+            var fundSources = HttpRequestStorage.DatabaseEntities.FundSources.OrderBy(x => x.FundSourceNumber);
             var programIndices = HttpRequestStorage.DatabaseEntities.ProgramIndices.OrderBy(x => x.ProgramIndexCode);
             var projectCodes = HttpRequestStorage.DatabaseEntities.ProjectCodes.OrderBy(x => x.ProjectCodeName);
             var organizationCodes = HttpRequestStorage.DatabaseEntities.OrganizationCodes;
             
-            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people, grants, programIndices, projectCodes, organizationCodes);
+            var viewData = new EditInvoiceViewData(editInvoiceType, invoiceApprovalStatuses, invoiceStatuses, people, fundSources, programIndices, projectCodes, organizationCodes);
             return RazorPartialView<EditInvoice, EditInvoiceViewData, EditInvoiceViewModel>(viewData, viewModel);
         }
 
@@ -209,7 +209,7 @@ namespace ProjectFirma.Web.Controllers
 
 
 
-        #region WADNR Grant JSON API
+        #region WADNR FundSource JSON API
 
         [InvoicesViewJsonApiFeature]
         public JsonNetJArrayResult InvoiceJsonApi()

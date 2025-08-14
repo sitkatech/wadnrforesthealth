@@ -42,8 +42,8 @@ namespace ProjectFirma.Web.Models.ApiJson
             var outgoingProgramIndexes = programIndexes;
             if (doAlphaSort)
             {
-                // This sort order is semi-important; we are highlighting properly constructed, year prefixed Grant Numbers and pushing everything else to the bottom.
-                //outgoingProgramIndexes = GrantAllocation.OrderGrantAllocationsByYearPrefixedGrantNumbersThenEverythingElse(programIndexes);
+                // This sort order is semi-important; we are highlighting properly constructed, year prefixed FundSource Numbers and pushing everything else to the bottom.
+                //outgoingProgramIndexes = FundSourceAllocation.OrderFundSourceAllocationsByYearPrefixedFundSourceNumbersThenEverythingElse(programIndexes);
                 outgoingProgramIndexes = outgoingProgramIndexes.OrderBy(pi => pi.ProgramIndexCode).ToList();
             }
             return outgoingProgramIndexes.Select(pi => new ProgramIndexApiJson(pi)).ToList();

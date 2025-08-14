@@ -30,23 +30,23 @@ namespace ProjectFirma.Web.Models
             return OrganizationDetailUrlTemplate.ParameterReplace(agreement.OrganizationID);
         }
 
-        public static readonly UrlTemplate<int> GrantDetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<GrantController>.BuildUrlFromExpression(t => t.GrantDetail(UrlTemplate.Parameter1Int)));
+        public static readonly UrlTemplate<int> FundSourceDetailUrlTemplate = new UrlTemplate<int>(SitkaRoute<FundSourceController>.BuildUrlFromExpression(t => t.FundSourceDetail(UrlTemplate.Parameter1Int)));
 
-        public static HtmlString GetListOfGrantHrefs(this Models.Agreement agreement)
+        public static HtmlString GetListOfFundSourceHrefs(this Models.Agreement agreement)
         {
-            var distinctListOfGrants = agreement.AgreementGrantAllocations.Where(x => x != null).Select(x => x.GrantAllocation.GrantModification.Grant).DistinctBy(x => x.GrantNumber).OrderBy(x => x.GrantNumber, StringComparer.InvariantCultureIgnoreCase);
+            var distinctListOfFundSources = agreement.AgreementFundSourceAllocations.Where(x => x != null).Select(x => x.FundSourceAllocation.FundSource).DistinctBy(x => x.FundSourceNumber).OrderBy(x => x.FundSourceNumber, StringComparer.InvariantCultureIgnoreCase);
 
-            var distinctListOfGrantHrefs = distinctListOfGrants.Select(x =>
-                UrlTemplate.MakeHrefString(GrantDetailUrlTemplate.ParameterReplace(x.GrantID), x.GrantNumber));
-            return new HtmlString(string.Join(", ", distinctListOfGrantHrefs.Select(x => x.ToHtmlString())));
+            var distinctListOfFundSourceHrefs = distinctListOfFundSources.Select(x =>
+                UrlTemplate.MakeHrefString(FundSourceDetailUrlTemplate.ParameterReplace(x.FundSourceID), x.FundSourceNumber));
+            return new HtmlString(string.Join(", ", distinctListOfFundSourceHrefs.Select(x => x.ToHtmlString())));
         }
         
-        public static string GetListOfGrantHrefsForAgGrid(this Models.Agreement agreement)
+        public static string GetListOfFundSourceHrefsForAgGrid(this Models.Agreement agreement)
         {
-            var distinctListOfGrants = agreement.AgreementGrantAllocations.Where(x => x != null).Select(x => x.GrantAllocation.GrantModification.Grant).DistinctBy(x => x.GrantNumber).OrderBy(x => x.GrantNumber, StringComparer.InvariantCultureIgnoreCase);
+            var distinctListOfFundSources = agreement.AgreementFundSourceAllocations.Where(x => x != null).Select(x => x.FundSourceAllocation.FundSource).DistinctBy(x => x.FundSourceNumber).OrderBy(x => x.FundSourceNumber, StringComparer.InvariantCultureIgnoreCase);
 
-            var distinctListOfGrantHrefs = distinctListOfGrants.Select(x => new HtmlLinkObject(x.GrantNumber, GrantDetailUrlTemplate.ParameterReplace(x.GrantID)));
-            return distinctListOfGrantHrefs.ToJsonArrayForAgGrid();
+            var distinctListOfFundSourceHrefs = distinctListOfFundSources.Select(x => new HtmlLinkObject(x.FundSourceNumber, FundSourceDetailUrlTemplate.ParameterReplace(x.FundSourceID)));
+            return distinctListOfFundSourceHrefs.ToJsonArrayForAgGrid();
         }
 
         public static readonly UrlTemplate<int> EditUrlTemplate = new UrlTemplate<int>(SitkaRoute<AgreementController>.BuildUrlFromExpression(t => t.Edit(UrlTemplate.Parameter1Int)));
