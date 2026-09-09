@@ -21,6 +21,12 @@ export class GenericFeatureCollectionLayerComponent extends MapLayerBase impleme
     @Input() selectedIDs: number[] | null = null;
     @Input() popupContentFn: ((feature: Feature, latlng: L.LatLng) => string | null) | null = null;
     /**
+     * Optional async rebuild of the marker popup after it opens (e.g. to weave in a County lookup).
+     * Receives the feature, latlng, and the base popup HTML; returns the full replacement HTML,
+     * or null to leave the popup unchanged.
+     */
+    @Input() extraPopupContentFn: ((feature: Feature, latlng: L.LatLng, baseHtml: string) => Promise<string | null>) | null = null;
+    /**
      * When true, clicking a feature highlights it (in MAP_SELECTED_COLOR) without the parent
      * needing to round-trip `selectedIDs`. Requires `identifierProperty`. Popups still fire.
      */
@@ -504,6 +510,16 @@ export class GenericFeatureCollectionLayerComponent extends MapLayerBase impleme
                         .setLatLng(latlng)
                         .setContent(html)
                         .openOn(this.map);
+
+                    // Optionally rebuild the just-opened popup asynchronously (e.g. to weave in County).
+                    if (this.extraPopupContentFn) {
+                        const popupRef = this.activePopup;
+                        this.extraPopupContentFn(feature, latlng, html).then((rebuilt) => {
+                            if (rebuilt && this.map && this.activePopup === popupRef) {
+                                popupRef.setContent(rebuilt);
+                            }
+                        });
+                    }
                 }
                 return;
             }

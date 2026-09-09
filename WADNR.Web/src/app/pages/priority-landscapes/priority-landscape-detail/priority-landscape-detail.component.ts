@@ -1,9 +1,10 @@
 import { FileResourceService } from "src/app/shared/generated/api/file-resource.service";
 import { AsyncPipe, DatePipe } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
 import { Map } from "leaflet";
+import * as L from "leaflet";
 import { distinctUntilChanged, filter, forkJoin, map, Observable, shareReplay, startWith, Subject, switchMap } from "rxjs";
 import { DialogService } from "@ngneat/dialog";
 import { ConfirmService } from "src/app/shared/services/confirm/confirm.service";
@@ -60,7 +61,7 @@ import { LoadingDirective } from "src/app/shared/directives/loading.directive";
     templateUrl: "./priority-landscape-detail.component.html",
     styleUrls: ["./priority-landscape-detail.component.scss"],
 })
-export class PriorityLandscapeDetailComponent {
+export class PriorityLandscapeDetailComponent implements OnDestroy {
     public priorityLandscapeDetailPageData$: Observable<{
         priorityLandscape: PriorityLandscapeDetail;
         fileResources: FileResourcePriorityLandscapeDetail[];
@@ -138,10 +139,111 @@ export class PriorityLandscapeDetailComponent {
         );
     }
 
+    private readonly PRIORITY_LANDSCAPE_WMS_LAYER = "WADNRForestHealth:PriorityLandscape";
+    private readonly PRIORITY_LANDSCAPE_WMS_STYLE = "PriorityLandscape_type";
+    private readonly COUNTY_WMS_LAYER = "WADNRForestHealth:County";
+
     handleMapReady(event: any) {
         this.map = event.map;
         this.layerControl = event.layerControl;
         this.mapIsReady = true;
+        this.map.on("click", this.onMapClick);
+    }
+
+    ngOnDestroy(): void {
+        if (this.map) {
+            this.map.off("click", this.onMapClick);
+        }
+    }
+
+    /**
+     * Single consolidated click popup: reports the clicked Priority Landscape, and — only when the
+     * "All Washington Counties" overlay is turned on — the County at that point. Shows nothing when
+     * neither is hit.
+     */
+    private onMapClick = async (e: L.LeafletMouseEvent): Promise<void> => {
+        const [priorityLandscape, county] = await Promise.all([
+            this.queryWmsFeatureInfo(e.latlng, this.PRIORITY_LANDSCAPE_WMS_LAYER, this.PRIORITY_LANDSCAPE_WMS_STYLE),
+            this.isCountyLayerVisible() ? this.queryWmsFeatureInfo(e.latlng, this.COUNTY_WMS_LAYER, "") : Promise.resolve(null),
+        ]);
+
+        const lines: string[] = [];
+
+        const priorityLandscapeID = priorityLandscape?.["PriorityLandscapeID"];
+        const priorityLandscapeName = priorityLandscape?.["PriorityLandscapeName"];
+        if (priorityLandscapeID && priorityLandscapeName) {
+            lines.push(`<b>Priority Landscape:</b> <a href="/priority-landscapes/${priorityLandscapeID}">${priorityLandscapeName}</a>`);
+        }
+
+        const countyName = county?.["CountyName"];
+        if (countyName) {
+            const countyID = county?.["CountyID"];
+            const countyValue = countyID ? `<a href="/counties/${countyID}">${countyName}</a>` : `${countyName}`;
+            lines.push(`<b>County:</b> ${countyValue}`);
+        }
+
+        if (lines.length === 0) return;
+
+        lines.push(`<b>Location:</b> ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`);
+        L.popup().setLatLng(e.latlng).setContent(lines.join("<br>")).openOn(this.map);
+    };
+
+    private isCountyLayerVisible(): boolean {
+        const entries = ((this.layerControl as any)?.getLayers?.() ?? []) as any[];
+        return entries.some(
+            (entry) => entry?.overlay && (entry.layer as any)?.wmsParams?.layers === this.COUNTY_WMS_LAYER && this.map.hasLayer(entry.layer),
+        );
+    }
+
+    /**
+     * Async rebuild of a project marker popup: weaves the County line in just before the Location line,
+     * but only when the counties overlay is visible and a county is found at the click point.
+     */
+    public buildCountyPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
+        if (!this.isCountyLayerVisible()) return null;
+        const county = await this.queryWmsFeatureInfo(latlng, this.COUNTY_WMS_LAYER, "");
+        const countyName = county?.["CountyName"];
+        if (!countyName) return null;
+        const countyID = county?.["CountyID"];
+        const countyValue = countyID ? `<a href="/counties/${countyID}">${countyName}</a>` : `${countyName}`;
+        const countyLine = `<b>County:</b> ${countyValue}`;
+
+        // Insert the County line just before the Location line; fall back to appending.
+        const locationMarker = "<b>Location:</b>";
+        return baseHtml.includes(locationMarker)
+            ? baseHtml.replace(locationMarker, `${countyLine}<br>${locationMarker}`)
+            : `${baseHtml}<br>${countyLine}`;
+    };
+
+    private async queryWmsFeatureInfo(latlng: L.LatLng, queryLayers: string, styles: string): Promise<Record<string, any> | null> {
+        const crs = this.map.options.crs!;
+        const sw = crs.project!(this.map.getBounds().getSouthWest());
+        const ne = crs.project!(this.map.getBounds().getNorthEast());
+        const point = this.map.latLngToContainerPoint(latlng);
+        const params = {
+            service: "WMS",
+            version: "1.1.1",
+            request: "GetFeatureInfo",
+            layers: queryLayers,
+            query_layers: queryLayers,
+            styles,
+            bbox: `${sw.x},${sw.y},${ne.x},${ne.y}`,
+            width: this.map.getSize().x,
+            height: this.map.getSize().y,
+            srs: crs.code!,
+            format: "image/png",
+            info_format: "application/json",
+            x: Math.round(point.x),
+            y: Math.round(point.y),
+        };
+        const url = `${environment.geoserverMapServiceUrl}/wms?${new URLSearchParams(params as any).toString()}`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            return data?.features?.length ? data.features[0].properties : null;
+        } catch {
+            return null;
+        }
     }
 
     public documentUrl(fileResourceGuid?: string | null): SafeResourceUrl | null {

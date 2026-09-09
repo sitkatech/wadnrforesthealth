@@ -52,7 +52,8 @@
                                 [identifierProperty]="'ProjectID'"
                                 [selectOnClick]="true"
                                 [displayOnLoad]="true"
-                                [popupContentFn]="buildProjectPopupContent(vm.priorityLandscape)"></generic-feature-collection-layer>
+                                [popupContentFn]="buildProjectPopupContent(vm.priorityLandscape)"
+                                [extraPopupContentFn]="buildCountyPopupExtra"></generic-feature-collection-layer>
                         }
                         <priority-landscapes-layer
                             [map]="map"
@@ -66,7 +67,6 @@
                             [mode]="allPriorityLandscapesLayerMode"
                             [categoryFilter]="'East'"
                             [overlayLabelOverride]="'20-Year Forest Health Strategic Plan: Eastern WA Priority Landscapes'"
-                            [showPopupOnClick]="true"
                             [fitBoundsOnWmsAddToControl]="false"></priority-landscapes-layer>
                         <priority-landscapes-layer
                             [map]="map"
@@ -74,7 +74,6 @@
                             [mode]="allPriorityLandscapesLayerMode"
                             [categoryFilter]="'West'"
                             [overlayLabelOverride]="'Western WA Forest Health Priority Landscapes'"
-                            [showPopupOnClick]="true"
                             [fitBoundsOnWmsAddToControl]="false"></priority-landscapes-layer>
                         @if (projectIDsCqlFilter$ | async; as projectCqlFilter) {
                             <generic-wms-wfs-layer
