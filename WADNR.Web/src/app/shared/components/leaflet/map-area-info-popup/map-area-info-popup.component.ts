@@ -1,12 +1,12 @@
 import { Component, Input, OnChanges, OnDestroy } from "@angular/core";
 import * as L from "leaflet";
-import { MapAreaKey, MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
+import { MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
 
 /**
  * Behavior-only overlay (renders nothing). Projected into `<wadnr-map>`, it wires a single map `click`
  * handler that reports which geographic areas (Priority Landscape, DNR Upland Region, County) the click
- * fell in — each when it is in `alwaysAreas` or its overlay layer is visible — in one popup, plus Location.
- * Shows nothing when no area is hit. Marker clicks don't reach the map, so this never fires for pins.
+ * fell in — each only when its overlay layer is visible — in one popup, plus Location. Shows nothing when
+ * no area is hit. Marker clicks don't reach the map, so this never fires for pins.
  */
 @Component({
     selector: "map-area-info-popup",
@@ -16,8 +16,6 @@ import { MapAreaKey, MapAreaPopupService } from "src/app/shared/services/map-are
 export class MapAreaInfoPopupComponent implements OnChanges, OnDestroy {
     @Input() map: L.Map;
     @Input() layerControl: any;
-    /** Areas always reported regardless of overlay visibility (e.g. the page's own County/Region). */
-    @Input() alwaysAreas: MapAreaKey[] = [];
 
     private clickHandlerWired = false;
     private activePopup: L.Popup | null = null;
@@ -40,7 +38,7 @@ export class MapAreaInfoPopupComponent implements OnChanges, OnDestroy {
     }
 
     private onMapClick = async (e: L.LeafletMouseEvent): Promise<void> => {
-        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, e.latlng, this.alwaysAreas);
+        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, e.latlng);
         if (lines.length === 0) return;
 
         lines.push(this.mapAreaPopupService.locationLine(e.latlng));

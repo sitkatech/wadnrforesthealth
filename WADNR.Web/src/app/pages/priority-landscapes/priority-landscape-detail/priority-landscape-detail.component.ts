@@ -22,7 +22,7 @@ import { ExternalMapLayersComponent } from "src/app/shared/components/leaflet/la
 import { GenericFeatureCollectionLayerComponent } from "src/app/shared/components/leaflet/layers/generic-feature-collection-layer/generic-feature-collection-layer.component";
 import { GenericWmsWfsLayerComponent } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/generic-wms-wfs-layer.component";
 import { MapAreaInfoPopupComponent } from "src/app/shared/components/leaflet/map-area-info-popup/map-area-info-popup.component";
-import { MapAreaKey, MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
+import { MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
 
 import { OverlayMode } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/overlay-mode.enum";
 import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order";
@@ -81,8 +81,6 @@ export class PriorityLandscapeDetailComponent {
     public allPriorityLandscapesLayerMode = OverlayMode.ReferenceOnly;
     public OverlayMode = OverlayMode;
     public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
-    /** This page is a Priority Landscape, so that area is always reported; others gate on layer visibility. */
-    public alwaysAreas: MapAreaKey[] = ["PriorityLandscape"];
     public projectFeatures$: Observable<IFeature[]>;
     public projectIDsCqlFilter$: Observable<string>;
 
@@ -155,7 +153,7 @@ export class PriorityLandscapeDetailComponent {
 
     /** Marker popup addition: weaves the geographic areas (Priority Landscape, plus any visible overlays) before Location. */
     public areaMarkerPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
-        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng, this.alwaysAreas);
+        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng);
         return lines.length ? this.mapAreaPopupService.weaveBeforeLocation(baseHtml, lines) : null;
     };
 

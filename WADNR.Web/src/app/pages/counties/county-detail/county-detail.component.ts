@@ -23,7 +23,7 @@ import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order
 import { ExternalMapLayersComponent } from "src/app/shared/components/leaflet/layers/external-map-layers/external-map-layers.component";
 import { GenericFeatureCollectionLayerComponent } from "src/app/shared/components/leaflet/layers/generic-feature-collection-layer/generic-feature-collection-layer.component";
 import { MapAreaInfoPopupComponent } from "src/app/shared/components/leaflet/map-area-info-popup/map-area-info-popup.component";
-import { MapAreaKey, MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
+import { MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
 import { IFeature } from "src/app/shared/generated/model/i-feature";
 import { WADNRGridComponent } from "src/app/shared/components/wadnr-grid/wadnr-grid.component";
 import { LoadingDirective } from "src/app/shared/directives/loading.directive";
@@ -79,8 +79,6 @@ export class CountyDetailComponent implements OnInit, AfterViewChecked {
     public allCountiesLayerMode = OverlayMode.ReferenceOnly;
     public OverlayMode = OverlayMode;
     public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
-    /** This page is a County, so the County area is always reported; other areas gate on layer visibility. */
-    public alwaysAreas: MapAreaKey[] = ["County"];
     public columnDefs: ColDef<ProjectCountyDetailGridRow>[] = [];
     public pinnedTotalsRow = {
         fields: ["EstimatedTotalCost", "TotalAmount"],
@@ -219,7 +217,7 @@ export class CountyDetailComponent implements OnInit, AfterViewChecked {
 
     /** Marker popup addition: weaves the geographic areas (County, plus any visible overlays) before Location. */
     public areaMarkerPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
-        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng, this.alwaysAreas);
+        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng);
         return lines.length ? this.mapAreaPopupService.weaveBeforeLocation(baseHtml, lines) : null;
     };
 

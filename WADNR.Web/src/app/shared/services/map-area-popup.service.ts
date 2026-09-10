@@ -2,11 +2,7 @@ import { Injectable } from "@angular/core";
 import * as L from "leaflet";
 import { environment } from "src/environments/environment";
 
-/** The geographic overlay areas a click popup can report, in canonical display order. */
-export type MapAreaKey = "PriorityLandscape" | "DNRUplandRegion" | "County";
-
 interface AreaConfig {
-    key: MapAreaKey;
     wmsLayerName: string;
     wmsStyle: string;
     label: string;
@@ -18,14 +14,13 @@ interface AreaConfig {
 /**
  * Builds the shared "what geographic areas is this point in" popup content used across the detail-page
  * maps. For each area (Priority Landscape, DNR Upland Region, County) it runs a WMS GetFeatureInfo when
- * the area is either forced (`alwaysAreas`) or its overlay layer is currently visible, and returns a
- * labeled, linked line. Order is fixed: Priority Landscape, DNR Upland Region, County.
+ * that area's overlay layer is currently visible, and returns a labeled, linked line. Order is fixed:
+ * Priority Landscape, DNR Upland Region, County.
  */
 @Injectable({ providedIn: "root" })
 export class MapAreaPopupService {
     private readonly areaConfigs: AreaConfig[] = [
         {
-            key: "PriorityLandscape",
             wmsLayerName: "WADNRForestHealth:PriorityLandscape",
             wmsStyle: "PriorityLandscape_type",
             label: "Priority Landscape",
@@ -34,7 +29,6 @@ export class MapAreaPopupService {
             routerLinkBase: "/priority-landscapes/",
         },
         {
-            key: "DNRUplandRegion",
             wmsLayerName: "WADNRForestHealth:DNRUplandRegion",
             wmsStyle: "",
             label: "DNR Upland Region",
@@ -43,7 +37,6 @@ export class MapAreaPopupService {
             routerLinkBase: "/dnr-upland-regions/",
         },
         {
-            key: "County",
             wmsLayerName: "WADNRForestHealth:County",
             wmsStyle: "",
             label: "County",
@@ -54,16 +47,13 @@ export class MapAreaPopupService {
     ];
 
     /**
-     * Popup lines for the geographic overlays at a click point. An area is included when it is in
-     * `alwaysAreas` or its overlay layer is currently visible, and a feature is found there.
+     * Popup lines for the geographic overlays at a click point. An area is included only when its overlay
+     * layer is currently visible and a feature is found there.
      */
-    async buildAreaLines(map: L.Map, layerControl: any, latlng: L.LatLng, alwaysAreas: MapAreaKey[] = []): Promise<string[]> {
-        const always = new Set(alwaysAreas);
-
+    async buildAreaLines(map: L.Map, layerControl: any, latlng: L.LatLng): Promise<string[]> {
         const results = await Promise.all(
             this.areaConfigs.map((cfg) => {
-                const shouldQuery = always.has(cfg.key) || this.isLayerVisible(map, layerControl, cfg.wmsLayerName);
-                return shouldQuery
+                return this.isLayerVisible(map, layerControl, cfg.wmsLayerName)
                     ? this.queryWmsFeatureInfo(map, latlng, cfg.wmsLayerName, cfg.wmsStyle).then((props) => ({ cfg, props }))
                     : Promise.resolve({ cfg, props: null as Record<string, any> | null });
             }),

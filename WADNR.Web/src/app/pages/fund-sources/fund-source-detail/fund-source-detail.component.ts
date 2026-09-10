@@ -24,7 +24,7 @@ import { DNRUplandRegionsLayerComponent } from "src/app/shared/components/leafle
 import { CountiesLayerComponent } from "src/app/shared/components/leaflet/layers/counties-layer/counties-layer.component";
 import { OverlayMode } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/overlay-mode.enum";
 import { MapAreaInfoPopupComponent } from "src/app/shared/components/leaflet/map-area-info-popup/map-area-info-popup.component";
-import { MapAreaKey, MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
+import { MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
 import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order";
 import { Map } from "leaflet";
 import { Feature } from "geojson";
@@ -110,12 +110,9 @@ export class FundSourceDetailComponent implements AfterViewChecked {
     public mapIsReady = false;
     public OverlayMode = OverlayMode;
     public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
-    /** A fund source has no geographic "own" area; all overlay areas are gated on layer visibility. */
-    public alwaysAreas: MapAreaKey[] = [];
-
     /** Marker popup addition: weaves the visible geographic areas in before the Location line. */
     public areaMarkerPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
-        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng, this.alwaysAreas);
+        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng);
         return lines.length ? this.mapAreaPopupService.weaveBeforeLocation(baseHtml, lines) : null;
     };
 
