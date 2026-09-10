@@ -142,6 +142,7 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
     private readonly PRIORITY_LANDSCAPE_WMS_LAYER = "WADNRForestHealth:PriorityLandscape";
     private readonly PRIORITY_LANDSCAPE_WMS_STYLE = "PriorityLandscape_type";
     private readonly COUNTY_WMS_LAYER = "WADNRForestHealth:County";
+    private readonly DNR_UPLAND_REGION_WMS_LAYER = "WADNRForestHealth:DNRUplandRegion";
 
     handleMapReady(event: any) {
         this.map = event.map;
@@ -157,14 +158,14 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
     }
 
     /**
-     * Single consolidated click popup: reports the clicked Priority Landscape, and — only when the
-     * "All Washington Counties" overlay is turned on — the County at that point. Shows nothing when
-     * neither is hit.
+     * Single consolidated click popup: reports the clicked Priority Landscape, plus the County and/or
+     * DNR Upland Region at that point — each only when its overlay is turned on. Shows nothing when
+     * none are hit.
      */
     private onMapClick = async (e: L.LeafletMouseEvent): Promise<void> => {
-        const [priorityLandscape, county] = await Promise.all([
+        const [priorityLandscape, areaLines] = await Promise.all([
             this.queryWmsFeatureInfo(e.latlng, this.PRIORITY_LANDSCAPE_WMS_LAYER, this.PRIORITY_LANDSCAPE_WMS_STYLE),
-            this.isCountyLayerVisible() ? this.queryWmsFeatureInfo(e.latlng, this.COUNTY_WMS_LAYER, "") : Promise.resolve(null),
+            this.buildAreaLines(e.latlng),
         ]);
 
         const lines: string[] = [];
@@ -175,12 +176,7 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
             lines.push(`<b>Priority Landscape:</b> <a href="/priority-landscapes/${priorityLandscapeID}">${priorityLandscapeName}</a>`);
         }
 
-        const countyName = county?.["CountyName"];
-        if (countyName) {
-            const countyID = county?.["CountyID"];
-            const countyValue = countyID ? `<a href="/counties/${countyID}">${countyName}</a>` : `${countyName}`;
-            lines.push(`<b>County:</b> ${countyValue}`);
-        }
+        lines.push(...areaLines);
 
         if (lines.length === 0) return;
 
@@ -188,31 +184,56 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
         L.popup().setLatLng(e.latlng).setContent(lines.join("<br>")).openOn(this.map);
     };
 
-    private isCountyLayerVisible(): boolean {
+    /**
+     * Popup lines for the geographic overlays (County, DNR Upland Region) at a click point — each
+     * included only when its overlay is currently visible and a feature is found there.
+     */
+    private async buildAreaLines(latlng: L.LatLng): Promise<string[]> {
+        const [county, dnrUplandRegion] = await Promise.all([
+            this.isLayerVisible(this.COUNTY_WMS_LAYER) ? this.queryWmsFeatureInfo(latlng, this.COUNTY_WMS_LAYER, "") : Promise.resolve(null),
+            this.isLayerVisible(this.DNR_UPLAND_REGION_WMS_LAYER) ? this.queryWmsFeatureInfo(latlng, this.DNR_UPLAND_REGION_WMS_LAYER, "") : Promise.resolve(null),
+        ]);
+
+        const lines: string[] = [];
+
+        const regionName = dnrUplandRegion?.["DNRUplandRegionName"];
+        if (regionName) {
+            const regionID = dnrUplandRegion?.["DNRUplandRegionID"];
+            const regionValue = regionID ? `<a href="/dnr-upland-regions/${regionID}">${regionName}</a>` : `${regionName}`;
+            lines.push(`<b>DNR Upland Region:</b> ${regionValue}`);
+        }
+
+        const countyName = county?.["CountyName"];
+        if (countyName) {
+            const countyID = county?.["CountyID"];
+            const countyValue = countyID ? `<a href="/counties/${countyID}">${countyName}</a>` : `${countyName}`;
+            lines.push(`<b>County:</b> ${countyValue}`);
+        }
+
+        return lines;
+    }
+
+    private isLayerVisible(wmsLayerName: string): boolean {
         const entries = ((this.layerControl as any)?.getLayers?.() ?? []) as any[];
         return entries.some(
-            (entry) => entry?.overlay && (entry.layer as any)?.wmsParams?.layers === this.COUNTY_WMS_LAYER && this.map.hasLayer(entry.layer),
+            (entry) => entry?.overlay && (entry.layer as any)?.wmsParams?.layers === wmsLayerName && this.map.hasLayer(entry.layer),
         );
     }
 
     /**
-     * Async rebuild of a project marker popup: weaves the County line in just before the Location line,
-     * but only when the counties overlay is visible and a county is found at the click point.
+     * Async rebuild of a project marker popup: weaves the County and DNR Upland Region lines in just
+     * before the Location line, each only when its overlay is visible and a feature is found.
      */
-    public buildCountyPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
-        if (!this.isCountyLayerVisible()) return null;
-        const county = await this.queryWmsFeatureInfo(latlng, this.COUNTY_WMS_LAYER, "");
-        const countyName = county?.["CountyName"];
-        if (!countyName) return null;
-        const countyID = county?.["CountyID"];
-        const countyValue = countyID ? `<a href="/counties/${countyID}">${countyName}</a>` : `${countyName}`;
-        const countyLine = `<b>County:</b> ${countyValue}`;
+    public buildAreaPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
+        const areaLines = await this.buildAreaLines(latlng);
+        if (areaLines.length === 0) return null;
 
-        // Insert the County line just before the Location line; fall back to appending.
+        const insertion = areaLines.join("<br>");
+        // Insert the area lines just before the Location line; fall back to appending.
         const locationMarker = "<b>Location:</b>";
         return baseHtml.includes(locationMarker)
-            ? baseHtml.replace(locationMarker, `${countyLine}<br>${locationMarker}`)
-            : `${baseHtml}<br>${countyLine}`;
+            ? baseHtml.replace(locationMarker, `${insertion}<br>${locationMarker}`)
+            : `${baseHtml}<br>${insertion}`;
     };
 
     private async queryWmsFeatureInfo(latlng: L.LatLng, queryLayers: string, styles: string): Promise<Record<string, any> | null> {
@@ -314,8 +335,8 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
             const projectID = props["ProjectID"];
             const projectName = props["ProjectName"] ?? projectID;
             return `
-                <b>Priority Landscape:</b> <a href="/priority-landscapes/${priorityLandscape.PriorityLandscapeID}">${priorityLandscape.PriorityLandscapeName}</a><br>
                 <b>Project:</b> <a href="/projects/${projectID}">${projectName}</a><br>
+                <b>Priority Landscape:</b> <a href="/priority-landscapes/${priorityLandscape.PriorityLandscapeID}">${priorityLandscape.PriorityLandscapeName}</a><br>
                 <b>Location:</b> ${latlng.lat.toFixed(4)}, ${latlng.lng.toFixed(4)}
             `;
         };
