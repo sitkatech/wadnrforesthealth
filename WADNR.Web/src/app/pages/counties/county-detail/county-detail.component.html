@@ -33,10 +33,11 @@
             <div class="card-body">
                 <p>This map displays the location of any Projects associated with this County.</p>
                 <wadnr-map [mapHeight]="'400px'" [selectedTileLayer]="'Terrain'" [showLegend]="false" (onMapLoad)="handleMapReady($event)">
+                    <map-area-info-popup [map]="map" [layerControl]="layerControl" [alwaysAreas]="alwaysAreas"></map-area-info-popup>
                     <external-map-layers [map]="map" [layerControl]="layerControl" [context]="'other'" [displayOnLoad]="false"></external-map-layers>
                     @if (projectFeatures$ | async; as projectFeatures) {
                     <generic-feature-collection-layer [map]="map" [layerControl]="layerControl" [featureCollection]="projectFeatures" [layerName]="'Project Locations'" [layerColor]="'#3388ff'" [identifierProperty]="'ProjectID'" [selectOnClick]="true" [sortOrder]="MapLayerSortOrder.ProjectLocations" [displayOnLoad]="true"
-                        [popupContentFn]="buildProjectPopupContent(county)"></generic-feature-collection-layer>
+                        [popupContentFn]="projectPopupContentFn" [extraPopupContentFn]="areaMarkerPopupExtra"></generic-feature-collection-layer>
                     }
                     <counties-layer [map]="map" [layerControl]="layerControl" [selectedIDs]="[county.CountyID]" [mode]="highlightedCountyLayerMode"></counties-layer>
                     <counties-layer [map]="map" [layerControl]="layerControl" [mode]="allCountiesLayerMode" [sortOrder]="MapLayerSortOrder.County" [fitBoundsOnWmsAddToControl]="false"></counties-layer>

@@ -1,6 +1,6 @@
 import { FileResourceService } from "src/app/shared/generated/api/file-resource.service";
 import { AsyncPipe, DatePipe } from "@angular/common";
-import { Component, OnDestroy } from "@angular/core";
+import { Component } from "@angular/core";
 import { DomSanitizer, SafeHtml, SafeResourceUrl } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
 import { Map } from "leaflet";
@@ -21,6 +21,8 @@ import { DNRUplandRegionsLayerComponent } from "src/app/shared/components/leafle
 import { ExternalMapLayersComponent } from "src/app/shared/components/leaflet/layers/external-map-layers/external-map-layers.component";
 import { GenericFeatureCollectionLayerComponent } from "src/app/shared/components/leaflet/layers/generic-feature-collection-layer/generic-feature-collection-layer.component";
 import { GenericWmsWfsLayerComponent } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/generic-wms-wfs-layer.component";
+import { MapAreaInfoPopupComponent } from "src/app/shared/components/leaflet/map-area-info-popup/map-area-info-popup.component";
+import { MapAreaKey, MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
 
 import { OverlayMode } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/overlay-mode.enum";
 import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order";
@@ -54,6 +56,7 @@ import { LoadingDirective } from "src/app/shared/directives/loading.directive";
         ExternalMapLayersComponent,
         GenericFeatureCollectionLayerComponent,
         GenericWmsWfsLayerComponent,
+        MapAreaInfoPopupComponent,
         ProjectGridComponent,
         IconComponent,
         DatePipe,
@@ -62,7 +65,7 @@ import { LoadingDirective } from "src/app/shared/directives/loading.directive";
     templateUrl: "./priority-landscape-detail.component.html",
     styleUrls: ["./priority-landscape-detail.component.scss"],
 })
-export class PriorityLandscapeDetailComponent implements OnDestroy {
+export class PriorityLandscapeDetailComponent {
     public priorityLandscapeDetailPageData$: Observable<{
         priorityLandscape: PriorityLandscapeDetail;
         fileResources: FileResourcePriorityLandscapeDetail[];
@@ -78,6 +81,8 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
     public allPriorityLandscapesLayerMode = OverlayMode.ReferenceOnly;
     public OverlayMode = OverlayMode;
     public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
+    /** This page is a Priority Landscape, so that area is always reported; others gate on layer visibility. */
+    public alwaysAreas: MapAreaKey[] = ["PriorityLandscape"];
     public projectFeatures$: Observable<IFeature[]>;
     public projectIDsCqlFilter$: Observable<string>;
 
@@ -92,6 +97,7 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
         private dialogService: DialogService,
         private confirmService: ConfirmService,
         private alertService: AlertService,
+        private mapAreaPopupService: MapAreaPopupService,
     ) {}
 
     public sanitizeHtml(html: string | null | undefined): SafeHtml {
@@ -141,133 +147,17 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
         );
     }
 
-    private readonly PRIORITY_LANDSCAPE_WMS_LAYER = "WADNRForestHealth:PriorityLandscape";
-    private readonly PRIORITY_LANDSCAPE_WMS_STYLE = "PriorityLandscape_type";
-    private readonly COUNTY_WMS_LAYER = "WADNRForestHealth:County";
-    private readonly DNR_UPLAND_REGION_WMS_LAYER = "WADNRForestHealth:DNRUplandRegion";
-
     handleMapReady(event: any) {
         this.map = event.map;
         this.layerControl = event.layerControl;
         this.mapIsReady = true;
-        this.map.on("click", this.onMapClick);
     }
 
-    ngOnDestroy(): void {
-        if (this.map) {
-            this.map.off("click", this.onMapClick);
-        }
-    }
-
-    /**
-     * Single consolidated click popup: reports the clicked Priority Landscape, plus the County and/or
-     * DNR Upland Region at that point — each only when its overlay is turned on. Shows nothing when
-     * none are hit.
-     */
-    private onMapClick = async (e: L.LeafletMouseEvent): Promise<void> => {
-        const [priorityLandscape, areaLines] = await Promise.all([
-            this.queryWmsFeatureInfo(e.latlng, this.PRIORITY_LANDSCAPE_WMS_LAYER, this.PRIORITY_LANDSCAPE_WMS_STYLE),
-            this.buildAreaLines(e.latlng),
-        ]);
-
-        const lines: string[] = [];
-
-        const priorityLandscapeID = priorityLandscape?.["PriorityLandscapeID"];
-        const priorityLandscapeName = priorityLandscape?.["PriorityLandscapeName"];
-        if (priorityLandscapeID && priorityLandscapeName) {
-            lines.push(`<b>Priority Landscape:</b> <a href="/priority-landscapes/${priorityLandscapeID}">${priorityLandscapeName}</a>`);
-        }
-
-        lines.push(...areaLines);
-
-        if (lines.length === 0) return;
-
-        lines.push(`<b>Location:</b> ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}`);
-        L.popup().setLatLng(e.latlng).setContent(lines.join("<br>")).openOn(this.map);
+    /** Marker popup addition: weaves the geographic areas (Priority Landscape, plus any visible overlays) before Location. */
+    public areaMarkerPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
+        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng, this.alwaysAreas);
+        return lines.length ? this.mapAreaPopupService.weaveBeforeLocation(baseHtml, lines) : null;
     };
-
-    /**
-     * Popup lines for the geographic overlays (County, DNR Upland Region) at a click point — each
-     * included only when its overlay is currently visible and a feature is found there.
-     */
-    private async buildAreaLines(latlng: L.LatLng): Promise<string[]> {
-        const [county, dnrUplandRegion] = await Promise.all([
-            this.isLayerVisible(this.COUNTY_WMS_LAYER) ? this.queryWmsFeatureInfo(latlng, this.COUNTY_WMS_LAYER, "") : Promise.resolve(null),
-            this.isLayerVisible(this.DNR_UPLAND_REGION_WMS_LAYER) ? this.queryWmsFeatureInfo(latlng, this.DNR_UPLAND_REGION_WMS_LAYER, "") : Promise.resolve(null),
-        ]);
-
-        const lines: string[] = [];
-
-        const regionName = dnrUplandRegion?.["DNRUplandRegionName"];
-        if (regionName) {
-            const regionID = dnrUplandRegion?.["DNRUplandRegionID"];
-            const regionValue = regionID ? `<a href="/dnr-upland-regions/${regionID}">${regionName}</a>` : `${regionName}`;
-            lines.push(`<b>DNR Upland Region:</b> ${regionValue}`);
-        }
-
-        const countyName = county?.["CountyName"];
-        if (countyName) {
-            const countyID = county?.["CountyID"];
-            const countyValue = countyID ? `<a href="/counties/${countyID}">${countyName}</a>` : `${countyName}`;
-            lines.push(`<b>County:</b> ${countyValue}`);
-        }
-
-        return lines;
-    }
-
-    private isLayerVisible(wmsLayerName: string): boolean {
-        const entries = ((this.layerControl as any)?.getLayers?.() ?? []) as any[];
-        return entries.some(
-            (entry) => entry?.overlay && (entry.layer as any)?.wmsParams?.layers === wmsLayerName && this.map.hasLayer(entry.layer),
-        );
-    }
-
-    /**
-     * Async rebuild of a project marker popup: weaves the County and DNR Upland Region lines in just
-     * before the Location line, each only when its overlay is visible and a feature is found.
-     */
-    public buildAreaPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
-        const areaLines = await this.buildAreaLines(latlng);
-        if (areaLines.length === 0) return null;
-
-        const insertion = areaLines.join("<br>");
-        // Insert the area lines just before the Location line; fall back to appending.
-        const locationMarker = "<b>Location:</b>";
-        return baseHtml.includes(locationMarker)
-            ? baseHtml.replace(locationMarker, `${insertion}<br>${locationMarker}`)
-            : `${baseHtml}<br>${insertion}`;
-    };
-
-    private async queryWmsFeatureInfo(latlng: L.LatLng, queryLayers: string, styles: string): Promise<Record<string, any> | null> {
-        const crs = this.map.options.crs!;
-        const sw = crs.project!(this.map.getBounds().getSouthWest());
-        const ne = crs.project!(this.map.getBounds().getNorthEast());
-        const point = this.map.latLngToContainerPoint(latlng);
-        const params = {
-            service: "WMS",
-            version: "1.1.1",
-            request: "GetFeatureInfo",
-            layers: queryLayers,
-            query_layers: queryLayers,
-            styles,
-            bbox: `${sw.x},${sw.y},${ne.x},${ne.y}`,
-            width: this.map.getSize().x,
-            height: this.map.getSize().y,
-            srs: crs.code!,
-            format: "image/png",
-            info_format: "application/json",
-            x: Math.round(point.x),
-            y: Math.round(point.y),
-        };
-        const url = `${environment.geoserverMapServiceUrl}/wms?${new URLSearchParams(params as any).toString()}`;
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            return data?.features?.length ? data.features[0].properties : null;
-        } catch {
-            return null;
-        }
-    }
 
     public documentUrl(fileResourceGuid?: string | null): SafeResourceUrl | null {
         return getFileResourceUrlFromBase(environment.mainAppApiUrl, this.sanitizer, fileResourceGuid);
@@ -330,19 +220,17 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
         });
     }
 
-    buildProjectPopupContent(priorityLandscape: PriorityLandscapeDetail): (feature: Feature, latlng: L.LatLng) => string | null {
-        return (feature: Feature, latlng: L.LatLng): string | null => {
-            const props = feature.properties;
-            if (!props) return null;
-            const projectID = props["ProjectID"];
-            const projectName = props["ProjectName"] ?? projectID;
-            return `
-                <b>Project:</b> <a href="/projects/${projectID}">${projectName}</a><br>
-                <b>Priority Landscape:</b> <a href="/priority-landscapes/${priorityLandscape.PriorityLandscapeID}">${priorityLandscape.PriorityLandscapeName}</a><br>
-                <b>Location:</b> ${latlng.lat.toFixed(4)}, ${latlng.lng.toFixed(4)}
-            `;
-        };
-    }
+    /** Popup shown when a project location marker is clicked. Area lines weave in via areaMarkerPopupExtra. */
+    public projectPopupContentFn = (feature: Feature, latlng: L.LatLng): string | null => {
+        const props = feature.properties;
+        if (!props) return null;
+        const projectID = props["ProjectID"];
+        const projectName = props["ProjectName"] ?? projectID;
+        return `
+            <b>Project:</b> <a href="/projects/${projectID}">${projectName}</a><br>
+            <b>Location:</b> ${latlng.lat.toFixed(4)}, ${latlng.lng.toFixed(4)}
+        `;
+    };
 
     async deleteFile(priorityLandscapeID: number, priorityLandscapeFileResourceID: number): Promise<void> {
         const confirmed = await this.confirmService.confirm({

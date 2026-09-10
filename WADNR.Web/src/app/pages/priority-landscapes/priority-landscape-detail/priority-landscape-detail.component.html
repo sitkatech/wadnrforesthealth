@@ -41,6 +41,7 @@
                 <div class="card-body">
                     <p>{{ vm.priorityLandscape.PriorityLandscapeAboveMapText }}</p>
                     <wadnr-map [mapHeight]="'400px'" [selectedTileLayer]="'Terrain'" [showLegend]="false" (onMapLoad)="handleMapReady($event)">
+                        <map-area-info-popup [map]="map" [layerControl]="layerControl" [alwaysAreas]="alwaysAreas"></map-area-info-popup>
                         <external-map-layers [map]="map" [layerControl]="layerControl" [context]="'priority-landscape'" [displayOnLoad]="false"></external-map-layers>
                         @if (projectFeatures$ | async; as projectFeatures) {
                             <generic-feature-collection-layer
@@ -53,8 +54,8 @@
                                 [selectOnClick]="true"
                                 [sortOrder]="MapLayerSortOrder.ProjectLocations"
                                 [displayOnLoad]="true"
-                                [popupContentFn]="buildProjectPopupContent(vm.priorityLandscape)"
-                                [extraPopupContentFn]="buildAreaPopupExtra"></generic-feature-collection-layer>
+                                [popupContentFn]="projectPopupContentFn"
+                                [extraPopupContentFn]="areaMarkerPopupExtra"></generic-feature-collection-layer>
                         }
                         <priority-landscapes-layer
                             [map]="map"

@@ -23,6 +23,8 @@ import { PriorityLandscapesLayerComponent } from "src/app/shared/components/leaf
 import { DNRUplandRegionsLayerComponent } from "src/app/shared/components/leaflet/layers/dnr-upland-regions-layer/dnr-upland-regions-layer.component";
 import { CountiesLayerComponent } from "src/app/shared/components/leaflet/layers/counties-layer/counties-layer.component";
 import { OverlayMode } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/overlay-mode.enum";
+import { MapAreaInfoPopupComponent } from "src/app/shared/components/leaflet/map-area-info-popup/map-area-info-popup.component";
+import { MapAreaKey, MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
 import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order";
 import { Map } from "leaflet";
 import { Feature } from "geojson";
@@ -71,6 +73,7 @@ import { LocalDatePipe } from "src/app/shared/pipes/local-date.pipe";
         PriorityLandscapesLayerComponent,
         DNRUplandRegionsLayerComponent,
         CountiesLayerComponent,
+        MapAreaInfoPopupComponent,
     ],
     providers: [{ provide: TINYMCE_SCRIPT_SRC, useValue: "tinymce/tinymce.min.js" }],
     templateUrl: "./fund-source-detail.component.html",
@@ -107,6 +110,14 @@ export class FundSourceDetailComponent implements AfterViewChecked {
     public mapIsReady = false;
     public OverlayMode = OverlayMode;
     public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
+    /** A fund source has no geographic "own" area; all overlay areas are gated on layer visibility. */
+    public alwaysAreas: MapAreaKey[] = [];
+
+    /** Marker popup addition: weaves the visible geographic areas in before the Location line. */
+    public areaMarkerPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
+        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng, this.alwaysAreas);
+        return lines.length ? this.mapAreaPopupService.weaveBeforeLocation(baseHtml, lines) : null;
+    };
 
     /** Popup shown when a project location marker is clicked. */
     public projectPopupContentFn = (feature: Feature, latlng: L.LatLng): string | null => {
@@ -148,6 +159,7 @@ export class FundSourceDetailComponent implements AfterViewChecked {
         private confirmService: ConfirmService,
         private alertService: AlertService,
         private sanitizer: DomSanitizer,
+        private mapAreaPopupService: MapAreaPopupService,
     ) {}
 
     ngOnInit(): void {

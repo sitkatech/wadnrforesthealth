@@ -15,6 +15,8 @@ import { PriorityLandscapesLayerComponent } from "src/app/shared/components/leaf
 import { CountiesLayerComponent } from "src/app/shared/components/leaflet/layers/counties-layer/counties-layer.component";
 import { ExternalMapLayersComponent } from "src/app/shared/components/leaflet/layers/external-map-layers/external-map-layers.component";
 import { GenericFeatureCollectionLayerComponent } from "src/app/shared/components/leaflet/layers/generic-feature-collection-layer/generic-feature-collection-layer.component";
+import { MapAreaInfoPopupComponent } from "src/app/shared/components/leaflet/map-area-info-popup/map-area-info-popup.component";
+import { MapAreaKey, MapAreaPopupService } from "src/app/shared/services/map-area-popup.service";
 import { OverlayMode } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/overlay-mode.enum";
 import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order";
 import { IFeature } from "src/app/shared/generated/model/i-feature";
@@ -36,7 +38,7 @@ import { VerticalStackedBarChartComponent } from "src/app/shared/components/char
 @Component({
     selector: "dnr-upland-region-detail",
     standalone: true,
-    imports: [PageHeaderComponent, AsyncPipe, BreadcrumbComponent, WADNRMapComponent, DNRUplandRegionsLayerComponent, PriorityLandscapesLayerComponent, CountiesLayerComponent, ExternalMapLayersComponent, GenericFeatureCollectionLayerComponent, WADNRGridComponent, LoadingDirective, IconComponent, FieldDefinitionComponent, VerticalStackedBarChartComponent],
+    imports: [PageHeaderComponent, AsyncPipe, BreadcrumbComponent, WADNRMapComponent, DNRUplandRegionsLayerComponent, PriorityLandscapesLayerComponent, CountiesLayerComponent, ExternalMapLayersComponent, GenericFeatureCollectionLayerComponent, MapAreaInfoPopupComponent, WADNRGridComponent, LoadingDirective, IconComponent, FieldDefinitionComponent, VerticalStackedBarChartComponent],
     templateUrl: "./dnr-upland-region-detail.component.html",
     styleUrls: ["./dnr-upland-region-detail.component.scss"],
 })
@@ -89,6 +91,8 @@ export class DNRUplandRegionDetailComponent {
     public allDNRUplandRegionsLayerMode = OverlayMode.ReferenceOnly;
     public OverlayMode = OverlayMode;
     public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
+    /** This page is a DNR Upland Region, so that area is always reported; others gate on layer visibility. */
+    public alwaysAreas: MapAreaKey[] = ["DNRUplandRegion"];
     public projectFeatures$: Observable<IFeature[]>;
 
     public isAdmin$: Observable<boolean>;
@@ -116,6 +120,7 @@ export class DNRUplandRegionDetailComponent {
         private utilityFunctions: UtilityFunctionsService,
         private authService: AuthenticationService,
         private dialogService: DialogService,
+        private mapAreaPopupService: MapAreaPopupService,
     ) {}
 
     ngOnInit(): void {
@@ -353,19 +358,23 @@ export class DNRUplandRegionDetailComponent {
         ];
     }
 
-    buildProjectPopupContent(dnrUplandRegion: DNRUplandRegionDetail): (feature: Feature, latlng: L.LatLng) => string | null {
-        return (feature: Feature, latlng: L.LatLng): string | null => {
-            const props = feature.properties;
-            if (!props) return null;
-            const projectID = props["ProjectID"];
-            const projectName = props["ProjectName"] ?? projectID;
-            return `
-                <b>DNR Upland Region:</b> <a href="/dnr-upland-regions/${dnrUplandRegion.DNRUplandRegionID}">${dnrUplandRegion.DNRUplandRegionName}</a><br>
-                <b>Project:</b> <a href="/projects/${projectID}">${projectName}</a><br>
-                <b>Location:</b> ${latlng.lat.toFixed(4)}, ${latlng.lng.toFixed(4)}
-            `;
-        };
-    }
+    /** Popup shown when a project location marker is clicked. Area lines weave in via areaMarkerPopupExtra. */
+    public projectPopupContentFn = (feature: Feature, latlng: L.LatLng): string | null => {
+        const props = feature.properties;
+        if (!props) return null;
+        const projectID = props["ProjectID"];
+        const projectName = props["ProjectName"] ?? projectID;
+        return `
+            <b>Project:</b> <a href="/projects/${projectID}">${projectName}</a><br>
+            <b>Location:</b> ${latlng.lat.toFixed(4)}, ${latlng.lng.toFixed(4)}
+        `;
+    };
+
+    /** Marker popup addition: weaves the geographic areas (DNR Upland Region, plus any visible overlays) before Location. */
+    public areaMarkerPopupExtra = async (_feature: Feature, latlng: L.LatLng, baseHtml: string): Promise<string | null> => {
+        const lines = await this.mapAreaPopupService.buildAreaLines(this.map, this.layerControl, latlng, this.alwaysAreas);
+        return lines.length ? this.mapAreaPopupService.weaveBeforeLocation(baseHtml, lines) : null;
+    };
 
     handleMapReady(event: any) {
         this.map = event.map;
