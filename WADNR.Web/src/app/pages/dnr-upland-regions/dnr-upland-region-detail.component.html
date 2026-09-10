@@ -55,7 +55,7 @@
                 <wadnr-map [mapHeight]="'400px'" [selectedTileLayer]="'Terrain'" [showLegend]="false" (onMapLoad)="handleMapReady($event)">
                     <external-map-layers [map]="map" [layerControl]="layerControl" [context]="'other'" [displayOnLoad]="false"></external-map-layers>
                     @if (projectFeatures$ | async; as projectFeatures) {
-                    <generic-feature-collection-layer [map]="map" [layerControl]="layerControl" [featureCollection]="projectFeatures" [layerName]="'Project Locations'" [layerColor]="'#3388ff'" [identifierProperty]="'ProjectID'" [selectOnClick]="true" [displayOnLoad]="true"
+                    <generic-feature-collection-layer [map]="map" [layerControl]="layerControl" [featureCollection]="projectFeatures" [layerName]="'Project Locations'" [layerColor]="'#3388ff'" [identifierProperty]="'ProjectID'" [selectOnClick]="true" [sortOrder]="MapLayerSortOrder.ProjectLocations" [displayOnLoad]="true"
                         [popupContentFn]="buildProjectPopupContent(vm.dnrUplandRegion)"></generic-feature-collection-layer>
                     }
                     <dnr-upland-regions-layer
@@ -68,7 +68,10 @@
                         [map]="map"
                         [layerControl]="layerControl"
                         [mode]="allDNRUplandRegionsLayerMode"
+                        [sortOrder]="MapLayerSortOrder.DNRUplandRegion"
                         [fitBoundsOnWmsAddToControl]="false"></dnr-upland-regions-layer>
+                    <priority-landscapes-layer [map]="map" [layerControl]="layerControl" [mode]="OverlayMode.ReferenceOnly" [sortOrder]="MapLayerSortOrder.PriorityLandscape" [displayOnLoad]="false" [fitBoundsOnWmsAddToControl]="false"></priority-landscapes-layer>
+                    <counties-layer [map]="map" [layerControl]="layerControl" [mode]="OverlayMode.ReferenceOnly" [sortOrder]="MapLayerSortOrder.County" [displayOnLoad]="false" [fitBoundsOnWmsAddToControl]="false"></counties-layer>
                 </wadnr-map>
             </div>
         </div>

@@ -11,9 +11,12 @@ import { Map as LeafletMap } from "leaflet";
 import { PageHeaderComponent } from "src/app/shared/components/page-header/page-header.component";
 import { WADNRMapComponent } from "src/app/shared/components/leaflet/wadnr-map/wadnr-map.component";
 import { DNRUplandRegionsLayerComponent } from "src/app/shared/components/leaflet/layers/dnr-upland-regions-layer/dnr-upland-regions-layer.component";
+import { PriorityLandscapesLayerComponent } from "src/app/shared/components/leaflet/layers/priority-landscapes-layer/priority-landscapes-layer.component";
+import { CountiesLayerComponent } from "src/app/shared/components/leaflet/layers/counties-layer/counties-layer.component";
 import { ExternalMapLayersComponent } from "src/app/shared/components/leaflet/layers/external-map-layers/external-map-layers.component";
 import { GenericFeatureCollectionLayerComponent } from "src/app/shared/components/leaflet/layers/generic-feature-collection-layer/generic-feature-collection-layer.component";
 import { OverlayMode } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/overlay-mode.enum";
+import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order";
 import { IFeature } from "src/app/shared/generated/model/i-feature";
 import { DNRUplandRegionService } from "src/app/shared/generated/api/dnr-upland-region.service";
 import { DNRUplandRegionDetail } from "src/app/shared/generated/model/dnr-upland-region-detail";
@@ -33,7 +36,7 @@ import { VerticalStackedBarChartComponent } from "src/app/shared/components/char
 @Component({
     selector: "dnr-upland-region-detail",
     standalone: true,
-    imports: [PageHeaderComponent, AsyncPipe, BreadcrumbComponent, WADNRMapComponent, DNRUplandRegionsLayerComponent, ExternalMapLayersComponent, GenericFeatureCollectionLayerComponent, WADNRGridComponent, LoadingDirective, IconComponent, FieldDefinitionComponent, VerticalStackedBarChartComponent],
+    imports: [PageHeaderComponent, AsyncPipe, BreadcrumbComponent, WADNRMapComponent, DNRUplandRegionsLayerComponent, PriorityLandscapesLayerComponent, CountiesLayerComponent, ExternalMapLayersComponent, GenericFeatureCollectionLayerComponent, WADNRGridComponent, LoadingDirective, IconComponent, FieldDefinitionComponent, VerticalStackedBarChartComponent],
     templateUrl: "./dnr-upland-region-detail.component.html",
     styleUrls: ["./dnr-upland-region-detail.component.scss"],
 })
@@ -84,6 +87,8 @@ export class DNRUplandRegionDetailComponent {
     public mapIsReady: boolean = false;
     public highlightedDNRUplandRegionLayerMode = OverlayMode.Single;
     public allDNRUplandRegionsLayerMode = OverlayMode.ReferenceOnly;
+    public OverlayMode = OverlayMode;
+    public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
     public projectFeatures$: Observable<IFeature[]>;
 
     public isAdmin$: Observable<boolean>;

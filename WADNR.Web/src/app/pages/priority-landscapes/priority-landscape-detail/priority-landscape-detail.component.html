@@ -51,6 +51,7 @@
                                 [layerColor]="'#3388ff'"
                                 [identifierProperty]="'ProjectID'"
                                 [selectOnClick]="true"
+                                [sortOrder]="MapLayerSortOrder.ProjectLocations"
                                 [displayOnLoad]="true"
                                 [popupContentFn]="buildProjectPopupContent(vm.priorityLandscape)"
                                 [extraPopupContentFn]="buildAreaPopupExtra"></generic-feature-collection-layer>
@@ -67,6 +68,7 @@
                             [mode]="allPriorityLandscapesLayerMode"
                             [categoryFilter]="'East'"
                             [overlayLabelOverride]="'20-Year Forest Health Strategic Plan: Eastern WA Priority Landscapes'"
+                            [sortOrder]="MapLayerSortOrder.PriorityLandscape"
                             [fitBoundsOnWmsAddToControl]="false"></priority-landscapes-layer>
                         <priority-landscapes-layer
                             [map]="map"
@@ -74,6 +76,7 @@
                             [mode]="allPriorityLandscapesLayerMode"
                             [categoryFilter]="'West'"
                             [overlayLabelOverride]="'Western WA Forest Health Priority Landscapes'"
+                            [sortOrder]="MapLayerSortOrder.PriorityLandscapeWest"
                             [fitBoundsOnWmsAddToControl]="false"></priority-landscapes-layer>
                         @if (projectIDsCqlFilter$ | async; as projectCqlFilter) {
                             <generic-wms-wfs-layer
@@ -85,6 +88,7 @@
                                 [overlayLabel]="'Project Locations - Detail'"
                                 [wmsStyle]="''"
                                 [cqlFilter]="projectCqlFilter"
+                                [sortOrder]="MapLayerSortOrder.ProjectLocationsDetail"
                                 [displayOnLoad]="false"
                                 [fitBoundsOnWmsAddToControl]="false">
                             </generic-wms-wfs-layer>
@@ -97,6 +101,7 @@
                                 [overlayLabel]="'Project Treatment Areas'"
                                 [wmsStyle]="''"
                                 [cqlFilter]="projectCqlFilter"
+                                [sortOrder]="MapLayerSortOrder.ProjectTreatmentArea"
                                 [displayOnLoad]="false"
                                 [fitBoundsOnWmsAddToControl]="false">
                             </generic-wms-wfs-layer>
@@ -105,12 +110,14 @@
                             [map]="map"
                             [layerControl]="layerControl"
                             [mode]="OverlayMode.ReferenceOnly"
+                            [sortOrder]="MapLayerSortOrder.DNRUplandRegion"
                             [displayOnLoad]="false"
                             [fitBoundsOnWmsAddToControl]="false"></dnr-upland-regions-layer>
                         <counties-layer
                             [map]="map"
                             [layerControl]="layerControl"
                             [mode]="OverlayMode.ReferenceOnly"
+                            [sortOrder]="MapLayerSortOrder.County"
                             [displayOnLoad]="false"
                             [fitBoundsOnWmsAddToControl]="false"></counties-layer>
                     </wadnr-map>

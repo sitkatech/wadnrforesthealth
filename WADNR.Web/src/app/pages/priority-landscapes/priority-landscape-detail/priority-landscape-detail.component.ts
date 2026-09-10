@@ -23,6 +23,7 @@ import { GenericFeatureCollectionLayerComponent } from "src/app/shared/component
 import { GenericWmsWfsLayerComponent } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/generic-wms-wfs-layer.component";
 
 import { OverlayMode } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/overlay-mode.enum";
+import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order";
 import { Feature } from "geojson";
 import { IFeature } from "src/app/shared/generated/model/i-feature";
 import { PriorityLandscapeService } from "src/app/shared/generated/api/priority-landscape.service";
@@ -76,6 +77,7 @@ export class PriorityLandscapeDetailComponent implements OnDestroy {
     public highlightedPriorityLandscapeLayerMode = OverlayMode.Single;
     public allPriorityLandscapesLayerMode = OverlayMode.ReferenceOnly;
     public OverlayMode = OverlayMode;
+    public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
     public projectFeatures$: Observable<IFeature[]>;
     public projectIDsCqlFilter$: Observable<string>;
 

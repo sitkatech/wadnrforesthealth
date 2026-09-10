@@ -133,11 +133,12 @@
                             [layerColor]="'#3388ff'"
                             [identifierProperty]="'ProjectID'"
                             [selectOnClick]="true"
+                            [sortOrder]="MapLayerSortOrder.ProjectLocations"
                             [displayOnLoad]="true"
                             [popupContentFn]="projectPopupContentFn"></generic-feature-collection-layer>
-                        <priority-landscapes-layer [map]="map" [layerControl]="layerControl" [mode]="OverlayMode.ReferenceOnly" [displayOnLoad]="false" [fitBoundsOnWmsAddToControl]="false"></priority-landscapes-layer>
-                        <dnr-upland-regions-layer [map]="map" [layerControl]="layerControl" [mode]="OverlayMode.ReferenceOnly" [displayOnLoad]="false" [fitBoundsOnWmsAddToControl]="false"></dnr-upland-regions-layer>
-                        <counties-layer [map]="map" [layerControl]="layerControl" [mode]="OverlayMode.ReferenceOnly" [displayOnLoad]="false" [fitBoundsOnWmsAddToControl]="false"></counties-layer>
+                        <priority-landscapes-layer [map]="map" [layerControl]="layerControl" [mode]="OverlayMode.ReferenceOnly" [sortOrder]="MapLayerSortOrder.PriorityLandscape" [displayOnLoad]="false" [fitBoundsOnWmsAddToControl]="false"></priority-landscapes-layer>
+                        <dnr-upland-regions-layer [map]="map" [layerControl]="layerControl" [mode]="OverlayMode.ReferenceOnly" [sortOrder]="MapLayerSortOrder.DNRUplandRegion" [displayOnLoad]="false" [fitBoundsOnWmsAddToControl]="false"></dnr-upland-regions-layer>
+                        <counties-layer [map]="map" [layerControl]="layerControl" [mode]="OverlayMode.ReferenceOnly" [sortOrder]="MapLayerSortOrder.County" [displayOnLoad]="false" [fitBoundsOnWmsAddToControl]="false"></counties-layer>
                     </wadnr-map>
                 } @else {
                     <div [loadingSpinner]="{ isLoading: true, loadingHeight: 200 }"></div>

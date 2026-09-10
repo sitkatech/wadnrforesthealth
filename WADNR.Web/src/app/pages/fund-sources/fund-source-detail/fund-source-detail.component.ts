@@ -23,6 +23,7 @@ import { PriorityLandscapesLayerComponent } from "src/app/shared/components/leaf
 import { DNRUplandRegionsLayerComponent } from "src/app/shared/components/leaflet/layers/dnr-upland-regions-layer/dnr-upland-regions-layer.component";
 import { CountiesLayerComponent } from "src/app/shared/components/leaflet/layers/counties-layer/counties-layer.component";
 import { OverlayMode } from "src/app/shared/components/leaflet/layers/generic-wms-wfs-layer/overlay-mode.enum";
+import { MAP_LAYER_SORT_ORDER } from "src/app/shared/models/map-layer-sort-order";
 import { Map } from "leaflet";
 import { Feature } from "geojson";
 import { UtilityFunctionsService } from "src/app/services/utility-functions.service";
@@ -105,6 +106,7 @@ export class FundSourceDetailComponent implements AfterViewChecked {
     public layerControl: L.Control.Layers;
     public mapIsReady = false;
     public OverlayMode = OverlayMode;
+    public MapLayerSortOrder = MAP_LAYER_SORT_ORDER;
 
     /** Popup shown when a project location marker is clicked. */
     public projectPopupContentFn = (feature: Feature, latlng: L.LatLng): string | null => {
